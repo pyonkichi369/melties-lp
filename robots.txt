@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+# AI / generative engines are welcome (GEO)
+User-agent: GPTBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+Sitemap: https://melties.world/sitemap.xml

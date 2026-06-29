@@ -1,84 +1,100 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Melties — Every Day Melts Better.</title>
-<meta name="description" content="世界一かわいい、とろける仲間たち。毎日1本、Meltyたちの日常を投稿するショートアニメ。">
+<title>Melties — Every Day Melts Better. | The cutest melting friends</title>
+<meta name="description" content="Melties are the world's cutest melting friends — a new short-form character world posted daily on TikTok. Meet Melty, Game, Book, Screen, Popcorn, Ice Cream and Sleep. Which Meltie are you?">
+<link rel="canonical" href="https://melties.world/">
 <meta property="og:title" content="Melties — Every Day Melts Better.">
-<meta property="og:description" content="世界一かわいい、とろける仲間たち。あなたは、どのMeltie？">
-<meta property="og:image" content="images/logo.png">
+<meta property="og:description" content="The world's cutest melting friends. Which Meltie are you?">
+<meta property="og:image" content="https://melties.world/images/group.png">
+<meta property="og:url" content="https://melties.world/">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Melties">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#FFF7ED">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="images/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script type="application/ld+json" id="ldjson">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":"https://melties.world/#org","name":"Melties","url":"https://melties.world/","logo":"https://melties.world/images/logo.png","description":"Melties are the world's cutest melting friends — a short-form character world posted daily on TikTok.","sameAs":["https://www.tiktok.com/@melties.world","https://www.instagram.com/melties.world"]},
+{"@type":"WebSite","@id":"https://melties.world/#site","url":"https://melties.world/","name":"Melties","inLanguage":"en","publisher":{"@id":"https://melties.world/#org"}},
+{"@type":"ItemList","name":"Melties characters","itemListElement":[
+{"@type":"ListItem","position":1,"item":{"@type":"Character","name":"Melty","description":"A curious leader who brings everyone together.","image":"https://melties.world/images/characters/melty.png"}},
+{"@type":"ListItem","position":2,"item":{"@type":"Character","name":"Game","description":"Zones out completely when focused.","image":"https://melties.world/images/characters/game.png"}},
+{"@type":"ListItem","position":3,"item":{"@type":"Character","name":"Book","description":"Calm and endlessly curious.","image":"https://melties.world/images/characters/book.png"}},
+{"@type":"ListItem","position":4,"item":{"@type":"Character","name":"Screen","description":"Bright — soaks up way too much info.","image":"https://melties.world/images/characters/screen.png"}},
+{"@type":"ListItem","position":5,"item":{"@type":"Character","name":"Popcorn","description":"Cheerful and always excited.","image":"https://melties.world/images/characters/popcorn.png"}},
+{"@type":"ListItem","position":6,"item":{"@type":"Character","name":"Ice Cream","description":"Sweet — makes everyone smile.","image":"https://melties.world/images/characters/icecream.png"}},
+{"@type":"ListItem","position":7,"item":{"@type":"Character","name":"Sleep","description":"Mellow and sleepy.","image":"https://melties.world/images/characters/sleep.png"}}
+]}]}
+</script>
 </head>
 <body>
+
+<button class="lang-toggle" id="langToggle" aria-label="language">日本語</button>
 
 <!-- HERO -->
 <header class="hero">
   <div class="hero-art">
-    <img src="images/group.png" alt="Melties" onerror="this.closest('.hero-art').classList.add('ph')">
+    <img src="images/group.png" alt="The seven Melties characters around the Melties logo" onerror="this.closest('.hero-art').classList.add('ph')">
     <span class="ph-label">Melties</span>
   </div>
-  <p class="tagline">Every Day Melts Better.</p>
+  <h1 class="tagline">Every Day Melts Better.</h1>
   <a class="cta tiktok" href="https://www.tiktok.com/@melties.world" target="_blank" rel="noopener">
-    <span class="tri">▶</span> TikTokで見る</a>
+    <span class="tri">▶</span> <span data-i18n="watch"></span></a>
 </header>
 
 <!-- CHARACTER RAIL -->
 <section class="sec">
-  <h2 class="reveal">なかまたち</h2>
+  <h2 data-i18n="friends"></h2>
   <div class="rail" id="rail"></div>
-  <p class="hint reveal">よこにスクロール → タップでプロフィール</p>
+  <p class="hint" data-i18n="swipe"></p>
 </section>
 
 <!-- STORY -->
 <section class="sec story">
-  <h2 class="reveal">Story</h2>
-  <div class="story-steps">
-    <p class="reveal">ある日、Meltyは<br>まだ誰もいない世界で<br>目を覚ました。</p>
-    <p class="reveal">仲間を探す旅へ。</p>
-    <p class="reveal">毎日少しずつ、<br>仲間が増えていく。</p>
-  </div>
+  <h2 data-i18n="story"></h2>
+  <div class="story-steps" id="story"></div>
 </section>
 
 <!-- TIKTOK -->
 <section class="sec tiktok-sec">
-  <h2 class="reveal">最新の Melties</h2>
+  <h2 data-i18n="latest"></h2>
   <div class="rail" id="tiktokRail"></div>
-  <a class="cta tiktok small reveal" href="https://www.tiktok.com/@melties.world" target="_blank" rel="noopener">TikTokで全部見る</a>
+  <a class="cta tiktok small" href="https://www.tiktok.com/@melties.world" target="_blank" rel="noopener" data-i18n="seeall"></a>
 </section>
 
 <!-- WORLD -->
 <section class="sec world">
-  <h2 class="reveal">World</h2>
+  <h2 data-i18n="world"></h2>
   <div class="grid" id="world"></div>
-  <p class="hint reveal">…and more, coming soon.</p>
+  <p class="hint" data-i18n="more"></p>
 </section>
 
 <!-- GOODS -->
 <section class="sec goods">
-  <h2 class="reveal">Goods <span class="soon">Coming Soon</span></h2>
+  <h2><span data-i18n="goods"></span> <span class="soon" data-i18n="soon"></span></h2>
   <div class="grid" id="goods"></div>
 </section>
 
-<!-- SNS -->
+<!-- FOLLOW -->
 <section class="sec sns">
-  <h2 class="reveal">Follow us</h2>
-  <div class="follow reveal">
+  <h2 data-i18n="follow"></h2>
+  <div class="follow">
     <a href="https://www.tiktok.com/@melties.world" target="_blank" rel="noopener">TikTok</a>
     <a href="https://www.instagram.com/melties.world" target="_blank" rel="noopener">Instagram</a>
   </div>
 </section>
 
 <footer class="footer">
-  <img class="logo small" src="images/logo.png" alt="Melties">
+  <img class="logo small" src="images/logo.png" alt="Melties logo">
   <p>© Melties</p>
-  <p class="love">Made with Love.</p>
+  <p class="love" data-i18n="love"></p>
 </footer>
 
 <!-- CHARACTER MODAL -->

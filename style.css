@@ -120,4 +120,11 @@ section .cta.small{display:flex;width:max-content}
 .modal-x{position:fixed;top:20px;right:24px;z-index:51;width:48px;height:48px;border:none;border-radius:50%;
   background:#fff;color:var(--ink);font-size:1.6rem;box-shadow:var(--soft);cursor:pointer}
 
+/* language toggle */
+.lang-toggle{position:fixed;top:16px;right:16px;z-index:40;border:none;cursor:pointer;
+  font-family:"M PLUS Rounded 1c";font-weight:800;font-size:.82rem;color:var(--ink);
+  background:rgba(255,255,255,.82);backdrop-filter:blur(6px);padding:9px 16px;border-radius:999px;
+  box-shadow:var(--soft);transition:transform .12s}
+.lang-toggle:active{transform:scale(.94)}
+
 @media(max-width:520px){.hero{min-height:84vh}}
