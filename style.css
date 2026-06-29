@@ -1,0 +1,123 @@
+:root{
+  --pink:#FF77B7; --blue:#6EC6FF; --yellow:#FFC861; --purple:#A27CFF; --mint:#6FE8D6;
+  --cream:#FFF7ED; --ink:#5A3D8A; --soft:0 12px 34px rgba(90,61,138,.14);
+  --r:30px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"M PLUS Rounded 1c",system-ui,sans-serif;color:var(--ink);
+  background:var(--cream);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+h2{font-family:"Mochiy Pop One",sans-serif;font-weight:400;font-size:clamp(1.5rem,5.5vw,2.3rem);
+  text-align:center;color:var(--ink);letter-spacing:.02em}
+.sec{padding:clamp(46px,8vw,88px) 0;max-width:1100px;margin:0 auto}
+.hint{text-align:center;color:#9b88b8;font-weight:700;font-size:.85rem;margin-top:14px}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.3,1);transition-delay:var(--d,0ms)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---- HERO ---- */
+.hero{min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:40px 20px;gap:18px;
+  background:radial-gradient(120% 80% at 50% 0,#ffe6f2 0,var(--cream) 60%)}
+.logo{width:min(560px,82vw);filter:drop-shadow(0 10px 18px rgba(90,61,138,.18));
+  animation:wobble 3.4s ease-in-out infinite;transform-origin:50% 60%}
+@keyframes wobble{0%,100%{transform:rotate(-1.6deg) scale(1)}50%{transform:rotate(1.6deg) scale(1.025)}}
+.logo.small{width:200px;animation:none}
+.tagline{font-family:"Mochiy Pop One",sans-serif;font-size:clamp(1.05rem,4vw,1.6rem);
+  background:linear-gradient(90deg,var(--pink),var(--purple),var(--blue),var(--pink));
+  background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:melt 6s linear infinite}
+@keyframes melt{to{background-position:300% 0}}
+.hero-art{width:min(480px,90vw);aspect-ratio:1;position:relative;margin:2px 0;
+  animation:floatY 4.5s ease-in-out infinite}
+.hero-art img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 14px 22px rgba(90,61,138,.2))}
+@keyframes floatY{50%{transform:translateY(-12px)}}
+
+/* ---- CTA buttons ---- */
+.cta{display:inline-flex;align-items:center;gap:10px;font-family:"Mochiy Pop One",sans-serif;
+  font-size:1.05rem;color:#fff;text-decoration:none;padding:16px 34px;border-radius:999px;
+  box-shadow:0 9px 0 #00000018,0 14px 28px rgba(255,119,183,.4);transition:transform .12s}
+.cta:active{transform:translateY(5px) scale(.97);box-shadow:0 3px 0 #00000018,0 8px 18px rgba(255,119,183,.4)}
+.cta.tiktok{background:linear-gradient(135deg,var(--pink),var(--purple))}
+.cta.small{font-size:.95rem;padding:12px 26px;margin:20px auto 0;box-shadow:var(--soft)}
+.tri{font-size:.85em}
+section .cta.small{display:flex;width:max-content}
+
+/* ---- rails (horizontal scroll) ---- */
+.rail{display:flex;gap:16px;overflow-x:auto;padding:24px clamp(16px,5vw,40px);scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch}
+.rail::-webkit-scrollbar{height:0}
+.ch{flex:0 0 auto;width:170px;scroll-snap-align:center;background:#fff;border:3px solid #fff;
+  border-radius:var(--r);padding:18px 14px 16px;box-shadow:var(--soft);cursor:pointer;
+  text-align:center;animation:float 4s ease-in-out infinite;transition:transform .16s}
+.ch:nth-child(even){animation-delay:.6s}
+.ch:hover{transform:translateY(-6px) scale(1.04)}
+.ch:active{transform:scale(.94)}
+@keyframes float{50%{transform:translateY(-9px)}}
+.ch-art{width:78%;aspect-ratio:1;margin:0 auto 10px;position:relative}
+.ch-art img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(90,61,138,.2))}
+.ch-name{font-family:"Mochiy Pop One",sans-serif;font-size:1rem;color:var(--ink)}
+.c-pink{border-top:6px solid var(--pink)} .c-mint{border-top:6px solid var(--mint)}
+.c-lav{border-top:6px solid var(--purple)} .c-pop{border-top:6px solid var(--yellow)}
+
+/* placeholders */
+.ph-label{display:none}
+.ph{background:linear-gradient(135deg,#ffd9ec,#e7dcff);border-radius:46% 46% 50% 50%/50%}
+.ph img{display:none}
+.ph .ph-label{display:flex;align-items:center;justify-content:center;position:absolute;inset:0;
+  font-family:"Mochiy Pop One",sans-serif;color:#fff;font-size:.85rem;text-shadow:0 2px 6px rgba(90,61,138,.4)}
+
+/* ---- story ---- */
+.story{text-align:center}
+.story-steps{display:flex;flex-direction:column;gap:34px;margin-top:34px;
+  font-family:"Mochiy Pop One",sans-serif;font-size:clamp(1.05rem,3.6vw,1.4rem);color:var(--ink)}
+.story-steps p:nth-child(2){color:var(--pink)}
+
+/* ---- tiktok cards ---- */
+.tt-card{flex:0 0 auto;width:160px;aspect-ratio:9/16;scroll-snap-align:center;border-radius:24px;
+  background:linear-gradient(160deg,#ffe1f0,#e9ddff);box-shadow:var(--soft);display:flex;
+  align-items:center;justify-content:center;text-decoration:none;color:#fff;animation:float 4s ease-in-out infinite}
+.tt-play{width:54px;height:54px;border-radius:50%;background:var(--pink);display:flex;align-items:center;
+  justify-content:center;font-size:1.2rem;box-shadow:0 6px 16px rgba(255,119,183,.5)}
+
+/* ---- grids (world / goods) ---- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px;
+  padding:30px clamp(16px,5vw,40px) 0}
+.tile{text-align:center}
+.tile-ph{aspect-ratio:1;border-radius:24px;background:linear-gradient(135deg,#ffe1f0,#e9ddff);
+  box-shadow:var(--soft);margin-bottom:10px}
+.tile span{font-weight:700;font-size:.85rem;color:var(--ink)}
+.soon{font-family:"M PLUS Rounded 1c";font-weight:800;font-size:.7rem;color:#7a5200;background:var(--yellow);
+  padding:4px 12px;border-radius:999px;vertical-align:middle;margin-left:8px}
+
+/* ---- sns ---- */
+.follow{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.follow a{font-family:"Mochiy Pop One",sans-serif;text-decoration:none;color:#fff;padding:13px 26px;
+  border-radius:999px;background:linear-gradient(135deg,var(--purple),var(--blue));box-shadow:var(--soft);
+  transition:transform .12s}
+.follow a:active{transform:scale(.95)}
+
+/* ---- footer ---- */
+.footer{text-align:center;padding:60px 20px 50px;background:radial-gradient(120% 100% at 50% 100%,#ffe6f2,var(--cream))}
+.footer p{color:#9b88b8;font-weight:700;margin-top:6px}
+.footer .love{font-size:.85rem;opacity:.8}
+
+/* ---- modal ---- */
+.modal{position:fixed;inset:0;z-index:50;background:rgba(90,61,138,.35);backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;padding:24px}
+.modal[hidden]{display:none}
+.modal-card{background:rgba(255,255,255,.85);border:3px solid #fff;border-radius:var(--r);
+  padding:30px 26px;max-width:340px;width:100%;text-align:center;box-shadow:var(--soft);
+  animation:pop .25s cubic-bezier(.2,.9,.3,1.3)}
+@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-card .ch-art{width:55%;margin:0 auto 14px}
+.modal-card h3{font-family:"Mochiy Pop One",sans-serif;color:var(--ink);font-size:1.3rem}
+.modal-card dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;text-align:left;margin:14px 0 18px;font-size:.9rem}
+.modal-card dt{font-weight:800;color:var(--pink)}
+.modal-x{position:fixed;top:20px;right:24px;z-index:51;width:48px;height:48px;border:none;border-radius:50%;
+  background:#fff;color:var(--ink);font-size:1.6rem;box-shadow:var(--soft);cursor:pointer}
+
+@media(max-width:520px){.hero{min-height:84vh}}

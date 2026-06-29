@@ -1,0 +1,10 @@
+{
+  "name": "Melties",
+  "short_name": "Melties",
+  "description": "世界一かわいい、とろける仲間たち。",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#FFF7ED",
+  "theme_color": "#FFF7ED",
+  "icons": [{ "src": "images/logo.png", "sizes": "512x512", "type": "image/png" }]
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Melties — Every Day Melts Better.</title>
+<meta name="description" content="世界一かわいい、とろける仲間たち。毎日1本、Meltyたちの日常を投稿するショートアニメ。">
+<meta property="og:title" content="Melties — Every Day Melts Better.">
+<meta property="og:description" content="世界一かわいい、とろける仲間たち。あなたは、どのMeltie？">
+<meta property="og:image" content="images/logo.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#FFF7ED">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="images/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-art">
+    <img src="images/group.png" alt="Melties" onerror="this.closest('.hero-art').classList.add('ph')">
+    <span class="ph-label">Melties</span>
+  </div>
+  <p class="tagline">Every Day Melts Better.</p>
+  <a class="cta tiktok" href="https://www.tiktok.com/@melties.world" target="_blank" rel="noopener">
+    <span class="tri">▶</span> TikTokで見る</a>
+</header>
+
+<!-- CHARACTER RAIL -->
+<section class="sec">
+  <h2 class="reveal">なかまたち</h2>
+  <div class="rail" id="rail"></div>
+  <p class="hint reveal">よこにスクロール → タップでプロフィール</p>
+</section>
+
+<!-- STORY -->
+<section class="sec story">
+  <h2 class="reveal">Story</h2>
+  <div class="story-steps">
+    <p class="reveal">ある日、Meltyは<br>まだ誰もいない世界で<br>目を覚ました。</p>
+    <p class="reveal">仲間を探す旅へ。</p>
+    <p class="reveal">毎日少しずつ、<br>仲間が増えていく。</p>
+  </div>
+</section>
+
+<!-- TIKTOK -->
+<section class="sec tiktok-sec">
+  <h2 class="reveal">最新の Melties</h2>
+  <div class="rail" id="tiktokRail"></div>
+  <a class="cta tiktok small reveal" href="https://www.tiktok.com/@melties.world" target="_blank" rel="noopener">TikTokで全部見る</a>
+</section>
+
+<!-- WORLD -->
+<section class="sec world">
+  <h2 class="reveal">World</h2>
+  <div class="grid" id="world"></div>
+  <p class="hint reveal">…and more, coming soon.</p>
+</section>
+
+<!-- GOODS -->
+<section class="sec goods">
+  <h2 class="reveal">Goods <span class="soon">Coming Soon</span></h2>
+  <div class="grid" id="goods"></div>
+</section>
+
+<!-- SNS -->
+<section class="sec sns">
+  <h2 class="reveal">Follow us</h2>
+  <div class="follow reveal">
+    <a href="https://www.tiktok.com/@melties.world" target="_blank" rel="noopener">TikTok</a>
+    <a href="https://www.instagram.com/melties.world" target="_blank" rel="noopener">Instagram</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <img class="logo small" src="images/logo.png" alt="Melties">
+  <p>© Melties</p>
+  <p class="love">Made with Love.</p>
+</footer>
+
+<!-- CHARACTER MODAL -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-card" id="modalCard"></div>
+  <button class="modal-x" id="modalX" aria-label="close">×</button>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
