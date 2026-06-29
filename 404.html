@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lost in the Melt — Melties</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FFF7ED">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"M PLUS Rounded 1c",system-ui,sans-serif;color:#5A3D8A;
+    background:radial-gradient(120% 80% at 50% 0,#ffe6f2 0,#FFF7ED 60%);
+    min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;gap:18px;padding:40px 20px;line-height:1.7}
+  img{width:min(220px,60vw);filter:drop-shadow(0 12px 20px rgba(90,61,138,.2));
+    animation:floatY 4.5s ease-in-out infinite}
+  @keyframes floatY{50%{transform:translateY(-12px)}}
+  h1{font-family:"Mochiy Pop One",sans-serif;font-weight:400;font-size:clamp(1.6rem,7vw,2.6rem)}
+  p{font-weight:700;color:#9b88b8}
+  a{display:inline-flex;align-items:center;gap:8px;font-family:"Mochiy Pop One",sans-serif;
+    color:#fff;text-decoration:none;padding:15px 32px;border-radius:999px;margin-top:8px;
+    background:linear-gradient(135deg,#FF77B7,#A27CFF);box-shadow:0 9px 0 #00000018,0 14px 28px rgba(255,119,183,.4)}
+  @media(prefers-reduced-motion:reduce){img{animation:none}}
+</style>
+</head>
+<body>
+  <img src="images/characters/melty.png" alt="Melty" onerror="this.style.display='none'">
+  <h1>404 — Melted Away</h1>
+  <p>This page melted before we could catch it.</p>
+  <a href="/">Back to Melties</a>
+</body>
+</html>

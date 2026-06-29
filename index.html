@@ -6,12 +6,16 @@
 <title>Melties — Every Day Melts Better. | The cutest melting friends</title>
 <meta name="description" content="Melties are the world's cutest melting friends — a new short-form character world posted daily on TikTok. Meet Melty, Game, Book, Screen, Popcorn, Ice Cream and Sleep. Which Meltie are you?">
 <link rel="canonical" href="https://melties.world/">
+<link rel="alternate" hreflang="en" href="https://melties.world/">
+<link rel="alternate" hreflang="x-default" href="https://melties.world/">
 <meta property="og:title" content="Melties — Every Day Melts Better.">
 <meta property="og:description" content="The world's cutest melting friends. Which Meltie are you?">
 <meta property="og:image" content="https://melties.world/images/group.png">
 <meta property="og:url" content="https://melties.world/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Melties">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#FFF7ED">
 <link rel="manifest" href="manifest.json">
@@ -36,6 +40,9 @@
 {"@type":"ListItem","position":7,"item":{"@type":"Character","name":"Sleep","description":"Mellow and sleepy.","image":"https://melties.world/images/characters/sleep.png"}}
 ]}]}
 </script>
+<!-- Privacy-friendly analytics: uncomment + add your token to enable Cloudflare Web Analytics (cookieless, free).
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"YOUR_TOKEN"}'></script>
+-->
 </head>
 <body>
 
@@ -48,60 +55,85 @@
     <span class="ph-label">Melties</span>
   </div>
   <h1 class="tagline">Every Day Melts Better.</h1>
-  <a class="cta tiktok" href="https://www.tiktok.com/@melties.world" target="_blank" rel="noopener">
-    <span class="tri">▶</span> <span data-i18n="watch"></span></a>
+  <a class="cta tiktok" href="https://www.tiktok.com/@melties.world" target="_blank" rel="noopener" data-track="hero-tiktok">
+    <span class="tri">▶</span> <span data-i18n="watch">Watch on TikTok</span></a>
 </header>
 
-<!-- CHARACTER RAIL -->
+<!-- CHARACTER RAIL (static EN content, enhanced by JS) -->
 <section class="sec">
-  <h2 data-i18n="friends"></h2>
-  <div class="rail" id="rail"></div>
-  <p class="hint" data-i18n="swipe"></p>
+  <h2 data-i18n="friends">Meet the Melties</h2>
+  <div class="rail" id="rail">
+    <button class="ch c-pink" data-i="0"><div class="ch-art ph"><img src="images/characters/melty.png" alt="Melty, a Melties character"><span class="ph-label">Melty</span></div><span class="ch-name">Melty</span></button>
+    <button class="ch c-lav" data-i="1"><div class="ch-art ph"><img src="images/characters/game.png" alt="Game, a Melties character"><span class="ph-label">Game</span></div><span class="ch-name">Game</span></button>
+    <button class="ch c-lav" data-i="2"><div class="ch-art ph"><img src="images/characters/book.png" alt="Book, a Melties character"><span class="ph-label">Book</span></div><span class="ch-name">Book</span></button>
+    <button class="ch c-mint" data-i="3"><div class="ch-art ph"><img src="images/characters/screen.png" alt="Screen, a Melties character"><span class="ph-label">Screen</span></div><span class="ch-name">Screen</span></button>
+    <button class="ch c-pop" data-i="4"><div class="ch-art ph"><img src="images/characters/popcorn.png" alt="Popcorn, a Melties character"><span class="ph-label">Popcorn</span></div><span class="ch-name">Popcorn</span></button>
+    <button class="ch c-pink" data-i="5"><div class="ch-art ph"><img src="images/characters/icecream.png" alt="Ice Cream, a Melties character"><span class="ph-label">Ice Cream</span></div><span class="ch-name">Ice Cream</span></button>
+    <button class="ch c-lav" data-i="6"><div class="ch-art ph"><img src="images/characters/sleep.png" alt="Sleep, a Melties character"><span class="ph-label">Sleep</span></div><span class="ch-name">Sleep</span></button>
+  </div>
+  <p class="hint" data-i18n="swipe">Swipe → tap a Meltie</p>
 </section>
 
-<!-- STORY -->
+<!-- STORY (static EN content) -->
 <section class="sec story">
-  <h2 data-i18n="story"></h2>
-  <div class="story-steps" id="story"></div>
+  <h2 data-i18n="story">Story</h2>
+  <div class="story-steps" id="story">
+    <p>One day, Melty woke up<br>in a world with no one else.</p>
+    <p>So began a journey<br>to find friends.</p>
+    <p>Little by little,<br>the friends grow.</p>
+  </div>
 </section>
 
 <!-- TIKTOK -->
 <section class="sec tiktok-sec">
-  <h2 data-i18n="latest"></h2>
+  <h2 data-i18n="latest">Latest Melties</h2>
   <div class="rail" id="tiktokRail"></div>
-  <a class="cta tiktok small" href="https://www.tiktok.com/@melties.world" target="_blank" rel="noopener" data-i18n="seeall"></a>
+  <a class="cta tiktok small" href="https://www.tiktok.com/@melties.world" target="_blank" rel="noopener" data-track="latest-seeall" data-i18n="seeall">See all on TikTok</a>
 </section>
 
-<!-- WORLD -->
+<!-- WORLD (static EN content) -->
 <section class="sec world">
-  <h2 data-i18n="world"></h2>
-  <div class="grid" id="world"></div>
-  <p class="hint" data-i18n="more"></p>
+  <h2 data-i18n="world">World</h2>
+  <div class="grid" id="world">
+    <div class="tile"><div class="tile-ph"></div><span>Melt World</span></div>
+    <div class="tile"><div class="tile-ph"></div><span>Candy Land</span></div>
+    <div class="tile"><div class="tile-ph"></div><span>Cinema</span></div>
+    <div class="tile"><div class="tile-ph"></div><span>Arcade</span></div>
+    <div class="tile"><div class="tile-ph"></div><span>Library</span></div>
+    <div class="tile"><div class="tile-ph"></div><span>Dreamland</span></div>
+  </div>
+  <p class="hint" data-i18n="more">…and more, coming soon.</p>
 </section>
 
-<!-- GOODS -->
+<!-- GOODS (static EN content) -->
 <section class="sec goods">
-  <h2><span data-i18n="goods"></span> <span class="soon" data-i18n="soon"></span></h2>
-  <div class="grid" id="goods"></div>
+  <h2><span data-i18n="goods">Goods</span> <span class="soon" data-i18n="soon">Coming Soon</span></h2>
+  <div class="grid" id="goods">
+    <div class="tile"><div class="tile-ph"></div><span>Plush</span></div>
+    <div class="tile"><div class="tile-ph"></div><span>Stickers</span></div>
+    <div class="tile"><div class="tile-ph"></div><span>LINE Stickers</span></div>
+    <div class="tile"><div class="tile-ph"></div><span>Apparel</span></div>
+    <div class="tile"><div class="tile-ph"></div><span>Figures</span></div>
+  </div>
 </section>
 
 <!-- FOLLOW -->
 <section class="sec sns">
-  <h2 data-i18n="follow"></h2>
+  <h2 data-i18n="follow">Follow us</h2>
   <div class="follow">
-    <a href="https://www.tiktok.com/@melties.world" target="_blank" rel="noopener">TikTok</a>
-    <a href="https://www.instagram.com/melties.world" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.tiktok.com/@melties.world" target="_blank" rel="noopener" data-track="follow-tiktok">TikTok</a>
+    <a href="https://www.instagram.com/melties.world" target="_blank" rel="noopener" data-track="follow-instagram">Instagram</a>
   </div>
 </section>
 
 <footer class="footer">
   <img class="logo small" src="images/logo.png" alt="Melties logo">
   <p>© Melties</p>
-  <p class="love" data-i18n="love"></p>
+  <p class="love" data-i18n="love">Made with Love.</p>
 </footer>
 
 <!-- CHARACTER MODAL -->
-<div class="modal" id="modal" hidden>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Meltie profile" hidden>
   <div class="modal-card" id="modalCard"></div>
   <button class="modal-x" id="modalX" aria-label="close">×</button>
 </div>

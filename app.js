@@ -6,9 +6,9 @@ const I18N = {
         follow:"Follow us", love:"Made with Love.", loves:"Loves", personality:"Personality",
         modalcta:"Watch on TikTok", toggle:"日本語" },
   jp: { watch:"TikTokで見る", friends:"なかまたち", swipe:"よこにスクロール → タップでプロフィール",
-        story:"Story", latest:"最新の Melties", seeall:"TikTokで全部見る",
-        world:"World", more:"…and more, coming soon.", goods:"Goods", soon:"Coming Soon",
-        follow:"Follow us", love:"Made with Love.", loves:"好きなもの", personality:"せいかく",
+        story:"ストーリー", latest:"最新の Melties", seeall:"TikTokで全部見る",
+        world:"ワールド", more:"…ほかにも、近日公開。", goods:"グッズ", soon:"近日公開",
+        follow:"フォローする", love:"Made with Love.", loves:"好きなもの", personality:"せいかく",
         modalcta:"動画で見る", toggle:"English" },
 };
 
@@ -28,6 +28,12 @@ const STORY = {
 const WORLD = [{en:"Melt World",jp:"とろける世界"},{en:"Candy Land",jp:"キャンディランド"},{en:"Cinema",jp:"映画館"},{en:"Arcade",jp:"ゲームセンター"},{en:"Library",jp:"図書館"},{en:"Dreamland",jp:"夢の国"}];
 const GOODS = [{en:"Plush",jp:"ぬいぐるみ"},{en:"Stickers",jp:"ステッカー"},{en:"LINE Stickers",jp:"LINEスタンプ"},{en:"Apparel",jp:"アパレル"},{en:"Figures",jp:"フィギュア"}];
 
+// ===== latest TikTok videos =====
+// Add real posts here as they go live: {url:"https://www.tiktok.com/@melties.world/video/123", thumb:"images/tiktok/1.jpg"}
+// thumb is optional (falls back to a gradient play-card). Empty array = teaser cards linking to the profile.
+const TIKTOK_PROFILE = "https://www.tiktok.com/@melties.world";
+const VIDEOS = [];
+
 let LANG = localStorage.getItem("melties_lang") || "en";
 
 const charImg = (k, en) =>
@@ -35,9 +41,20 @@ const charImg = (k, en) =>
      onerror="this.closest('.ch-art').classList.add('ph')" onload="this.closest('.ch-art').classList.remove('ph')">
    <span class="ph-label">${en}</span></div>`;
 
+function ttCards(){
+  if(VIDEOS.length){
+    return VIDEOS.map((v,i)=>`
+      <a class="tt-card reveal" style="--d:${i*60}ms" href="${v.url}" target="_blank" rel="noopener" data-track="latest-video">
+        ${v.thumb?`<img class="tt-thumb" src="${v.thumb}" alt="Latest Melties video" loading="lazy">`:""}
+        <span class="tt-play">▶</span></a>`).join("");
+  }
+  return Array.from({length:4},(_,i)=>
+    `<a class="tt-card reveal" style="--d:${i*60}ms" href="${TIKTOK_PROFILE}" target="_blank" rel="noopener" data-track="latest-teaser"><span class="tt-play">▶</span></a>`).join("");
+}
+
 function render() {
   const t = I18N[LANG];
-  document.documentElement.lang = LANG;
+  document.documentElement.lang = LANG === "jp" ? "ja" : "en";
   document.querySelectorAll("[data-i18n]").forEach(el => el.textContent = t[el.dataset.i18n] || "");
   document.getElementById("langToggle").textContent = t.toggle;
 
@@ -45,8 +62,7 @@ function render() {
     <button class="ch c-${c.c} reveal" style="--d:${i*60}ms" data-i="${i}">
       ${charImg(c.key,c.en)}<span class="ch-name">${c.en}</span></button>`).join("");
   document.getElementById("story").innerHTML = STORY[LANG].map(s=>`<p class="reveal">${s}</p>`).join("");
-  document.getElementById("tiktokRail").innerHTML = Array.from({length:4},(_,i)=>
-    `<a class="tt-card reveal" style="--d:${i*60}ms" href="https://www.tiktok.com/@melties.world" target="_blank" rel="noopener"><span class="tt-play">▶</span></a>`).join("");
+  document.getElementById("tiktokRail").innerHTML = ttCards();
   document.getElementById("world").innerHTML = WORLD.map((w,i)=>`<div class="tile reveal" style="--d:${i*50}ms"><div class="tile-ph"></div><span>${w[LANG]}</span></div>`).join("");
   document.getElementById("goods").innerHTML = GOODS.map((g,i)=>`<div class="tile reveal" style="--d:${i*50}ms"><div class="tile-ph"></div><span>${g[LANG]}</span></div>`).join("");
 
@@ -54,20 +70,25 @@ function render() {
   injectLD();
 }
 
-// ===== character modal =====
+// ===== character modal (a11y: Esc, focus return, aria) =====
 const modal = document.getElementById("modal"), modalCard = document.getElementById("modalCard");
+const modalX = document.getElementById("modalX");
+let lastFocus = null;
 function openChar(i){
   const c = CHARS[i], t = I18N[LANG];
+  lastFocus = document.activeElement;
   modalCard.className = "modal-card c-"+c.c;
   modalCard.innerHTML = `${charImg(c.key,c.en)}<h3>${c.en}</h3>
     <dl><dt>${t.loves}</dt><dd>${c.like[LANG]}</dd><dt>${t.personality}</dt><dd>${c.p[LANG]}</dd></dl>
-    <a class="cta tiktok small" href="https://www.tiktok.com/@melties.world" target="_blank" rel="noopener">${t.modalcta}</a>`;
+    <a class="cta tiktok small" href="${TIKTOK_PROFILE}" target="_blank" rel="noopener" data-track="modal-tiktok">${t.modalcta}</a>`;
   modal.hidden = false;
+  modalX.focus();
 }
 document.getElementById("rail").addEventListener("click", e=>{ const b=e.target.closest(".ch"); if(b) openChar(+b.dataset.i); });
-const closeModal=()=>modal.hidden=true;
-document.getElementById("modalX").addEventListener("click", closeModal);
+function closeModal(){ modal.hidden = true; if(lastFocus) lastFocus.focus(); }
+modalX.addEventListener("click", closeModal);
 modal.addEventListener("click", e=>{ if(e.target===modal) closeModal(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && !modal.hidden) closeModal(); });
 
 // ===== scroll reveal =====
 let io;
@@ -76,6 +97,14 @@ function setupReveal(){
   io = new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target);} }), {threshold:0.12});
   document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 }
+
+// ===== outbound click tracking (vendor-agnostic; no-op if no analytics present) =====
+function trackOutbound(name){
+  if(window.plausible) window.plausible(name);
+  else if(window.gtag) window.gtag("event","click",{event_label:name});
+  else if(window.umami) window.umami.track(name);
+}
+document.addEventListener("click", e=>{ const a=e.target.closest("[data-track]"); if(a) trackOutbound(a.dataset.track); });
 
 // ===== GEO / AI-search structured data (JSON-LD) =====
 function injectLD(){
