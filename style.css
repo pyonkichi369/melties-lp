@@ -92,9 +92,30 @@ section .cta.small{display:flex;width:max-content}
 .tile{text-align:center}
 .tile-ph{aspect-ratio:1;border-radius:24px;background:linear-gradient(135deg,#ffe1f0,#e9ddff);
   box-shadow:var(--soft);margin-bottom:10px}
+.tile-img{aspect-ratio:1;border-radius:24px;overflow:hidden;box-shadow:var(--soft);margin-bottom:10px;
+  background:linear-gradient(135deg,#ffe1f0,#e9ddff)}
+.tile-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+.tile:hover .tile-img img{transform:scale(1.06)}
 .tile span{font-weight:700;font-size:.85rem;color:var(--ink)}
 .soon{font-family:"M PLUS Rounded 1c";font-weight:800;font-size:.7rem;color:#7a5200;background:var(--yellow);
   padding:4px 12px;border-radius:999px;vertical-align:middle;margin-left:8px}
+
+/* ---- 3D character viewer (modal) ---- */
+.ch-3d{width:100%;aspect-ratio:1;margin:0 auto 6px;border-radius:var(--r);
+  background:radial-gradient(120% 100% at 50% 18%,#ffe6f2,#e9ddff);--poster-color:transparent}
+.modal-card .ch-3d{width:88%}
+
+/* ---- game ---- */
+.game{text-align:center}
+.game-hud{display:flex;gap:22px;justify-content:center;align-items:center;margin:14px 0 4px;
+  font-family:"Mochiy Pop One",sans-serif;color:var(--ink);font-size:.95rem}
+.game-hud b{color:var(--pink);margin-left:4px}
+.g-combo{font-family:"Mochiy Pop One",sans-serif;color:var(--yellow);min-width:48px;
+  text-shadow:0 2px 6px rgba(255,200,97,.5)}
+.game-wrap{max-width:600px;margin:12px auto 0;aspect-ratio:5/4;border-radius:var(--r);overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 0,#ffe6f2,#e9ddff);box-shadow:var(--soft);
+  touch-action:manipulation;cursor:pointer}
+.game-wrap canvas{display:block;width:100%;height:100%}
 
 /* ---- sns ---- */
 .follow{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}

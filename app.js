@@ -3,11 +3,13 @@ const I18N = {
   en: { watch:"Watch on TikTok", friends:"Meet the Melties", swipe:"Swipe → tap a Meltie",
         story:"Story", latest:"Latest Melties", seeall:"See all on TikTok",
         world:"World", more:"…and more, coming soon.", goods:"Goods", soon:"Coming Soon",
+        game:"Meltie Catch", gamehint:"Tap the falling Melties!",
         follow:"Follow us", love:"Made with Love.", loves:"Loves", personality:"Personality",
         modalcta:"Watch on TikTok", toggle:"日本語" },
   jp: { watch:"TikTokで見る", friends:"なかまたち", swipe:"よこにスクロール → タップでプロフィール",
         story:"ストーリー", latest:"最新の Melties", seeall:"TikTokで全部見る",
         world:"ワールド", more:"…ほかにも、近日公開。", goods:"グッズ", soon:"近日公開",
+        game:"メルティキャッチ", gamehint:"落ちてくるメルティをタップ！",
         follow:"フォローする", love:"Made with Love.", loves:"好きなもの", personality:"せいかく",
         modalcta:"動画で見る", toggle:"English" },
 };
@@ -25,7 +27,7 @@ const STORY = {
   en:["One day, Melty woke up<br>in a world with no one else.","So began a journey<br>to find friends.","Little by little,<br>the friends grow."],
   jp:["ある日、Meltyは<br>まだ誰もいない世界で<br>目を覚ました。","仲間を探す旅へ。","毎日少しずつ、<br>仲間が増えていく。"],
 };
-const WORLD = [{en:"Melt World",jp:"とろける世界"},{en:"Candy Land",jp:"キャンディランド"},{en:"Cinema",jp:"映画館"},{en:"Arcade",jp:"ゲームセンター"},{en:"Library",jp:"図書館"},{en:"Dreamland",jp:"夢の国"}];
+const WORLD = [{en:"Meltie World",jp:"めるてぃーわーるど",img:"meltworld"},{en:"Candy Land",jp:"キャンディランド",img:"candy"},{en:"Cinema",jp:"映画館",img:"cinema"},{en:"Arcade",jp:"ゲームセンター",img:"arcade"},{en:"Library",jp:"図書館",img:"library"},{en:"Dreamland",jp:"夢の国",img:"dreamland"}];
 const GOODS = [{en:"Plush",jp:"ぬいぐるみ"},{en:"Stickers",jp:"ステッカー"},{en:"LINE Stickers",jp:"LINEスタンプ"},{en:"Apparel",jp:"アパレル"},{en:"Figures",jp:"フィギュア"}];
 
 // ===== latest TikTok videos =====
@@ -35,6 +37,14 @@ const TIKTOK_PROFILE = "https://www.tiktok.com/@melties.world";
 const VIDEOS = [];
 
 let LANG = localStorage.getItem("melties_lang") || "en";
+
+// characters that have a 3D model in models/<key>.glb (others fall back to the PNG)
+const GLB_CHARS = new Set(["melty"]);
+const charView = (c) => GLB_CHARS.has(c.key)
+  ? `<model-viewer class="ch-3d" src="models/${c.key}.glb" alt="${c.en} 3D figure" camera-controls auto-rotate
+       touch-action="pan-y" disable-zoom shadow-intensity="1.1" exposure="1.15"
+       camera-orbit="0deg 78deg 3.4m" min-camera-orbit="auto 60deg auto" max-camera-orbit="auto 95deg auto"></model-viewer>`
+  : charImg(c.key, c.en);
 
 const charImg = (k, en) =>
   `<div class="ch-art ph"><img src="images/characters/${k}.png" alt="${en}, a Melties character"
@@ -63,7 +73,7 @@ function render() {
       ${charImg(c.key,c.en)}<span class="ch-name">${c.en}</span></button>`).join("");
   document.getElementById("story").innerHTML = STORY[LANG].map(s=>`<p class="reveal">${s}</p>`).join("");
   document.getElementById("tiktokRail").innerHTML = ttCards();
-  document.getElementById("world").innerHTML = WORLD.map((w,i)=>`<div class="tile reveal" style="--d:${i*50}ms"><div class="tile-ph"></div><span>${w[LANG]}</span></div>`).join("");
+  document.getElementById("world").innerHTML = WORLD.map((w,i)=>`<div class="tile reveal" style="--d:${i*50}ms"><div class="tile-img"><img src="images/world/${w.img}.jpg" alt="${w.en} — a Melties world" loading="lazy"></div><span>${w[LANG]}</span></div>`).join("");
   document.getElementById("goods").innerHTML = GOODS.map((g,i)=>`<div class="tile reveal" style="--d:${i*50}ms"><div class="tile-ph"></div><span>${g[LANG]}</span></div>`).join("");
 
   setupReveal();
@@ -78,7 +88,7 @@ function openChar(i){
   const c = CHARS[i], t = I18N[LANG];
   lastFocus = document.activeElement;
   modalCard.className = "modal-card c-"+c.c;
-  modalCard.innerHTML = `${charImg(c.key,c.en)}<h3>${c.en}</h3>
+  modalCard.innerHTML = `${charView(c)}<h3>${c.en}</h3>
     <dl><dt>${t.loves}</dt><dd>${c.like[LANG]}</dd><dt>${t.personality}</dt><dd>${c.p[LANG]}</dd></dl>
     <a class="cta tiktok small" href="${TIKTOK_PROFILE}" target="_blank" rel="noopener" data-track="modal-tiktok">${t.modalcta}</a>`;
   modal.hidden = false;

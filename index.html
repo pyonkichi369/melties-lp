@@ -26,6 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script type="module" src="https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 <script type="application/ld+json" id="ldjson">
 {"@context":"https://schema.org","@graph":[
 {"@type":"Organization","@id":"https://melties.world/#org","name":"Melties","url":"https://melties.world/","logo":"https://melties.world/images/logo.png","description":"Melties are the world's cutest melting friends — a short-form character world posted daily on TikTok.","sameAs":["https://www.tiktok.com/@melties.world","https://www.instagram.com/melties.world"]},
@@ -95,12 +96,12 @@
 <section class="sec world">
   <h2 data-i18n="world">World</h2>
   <div class="grid" id="world">
-    <div class="tile"><div class="tile-ph"></div><span>Melt World</span></div>
-    <div class="tile"><div class="tile-ph"></div><span>Candy Land</span></div>
-    <div class="tile"><div class="tile-ph"></div><span>Cinema</span></div>
-    <div class="tile"><div class="tile-ph"></div><span>Arcade</span></div>
-    <div class="tile"><div class="tile-ph"></div><span>Library</span></div>
-    <div class="tile"><div class="tile-ph"></div><span>Dreamland</span></div>
+    <div class="tile"><div class="tile-img"><img src="images/world/meltworld.jpg" alt="Meltie World — a Melties world" loading="lazy"></div><span>Meltie World</span></div>
+    <div class="tile"><div class="tile-img"><img src="images/world/candy.jpg" alt="Candy Land — a Melties world" loading="lazy"></div><span>Candy Land</span></div>
+    <div class="tile"><div class="tile-img"><img src="images/world/cinema.jpg" alt="Cinema — a Melties world" loading="lazy"></div><span>Cinema</span></div>
+    <div class="tile"><div class="tile-img"><img src="images/world/arcade.jpg" alt="Arcade — a Melties world" loading="lazy"></div><span>Arcade</span></div>
+    <div class="tile"><div class="tile-img"><img src="images/world/library.jpg" alt="Library — a Melties world" loading="lazy"></div><span>Library</span></div>
+    <div class="tile"><div class="tile-img"><img src="images/world/dreamland.jpg" alt="Dreamland — a Melties world" loading="lazy"></div><span>Dreamland</span></div>
   </div>
   <p class="hint" data-i18n="more">…and more, coming soon.</p>
 </section>
@@ -115,6 +116,18 @@
     <div class="tile"><div class="tile-ph"></div><span>Apparel</span></div>
     <div class="tile"><div class="tile-ph"></div><span>Figures</span></div>
   </div>
+</section>
+
+<!-- GAME (Three.js) -->
+<section class="sec game">
+  <h2 data-i18n="game">Meltie Catch</h2>
+  <p class="hint" data-i18n="gamehint">Tap the falling Melties!</p>
+  <div class="game-hud">
+    <span>Score <b id="gScore">0</b></span>
+    <span class="g-combo" id="gCombo"></span>
+    <span>Best <b id="gBest">0</b></span>
+  </div>
+  <div id="gameWrap" class="game-wrap" aria-label="Meltie Catch mini-game"></div>
 </section>
 
 <!-- FOLLOW -->
@@ -139,5 +152,6 @@
 </div>
 
 <script src="app.js"></script>
+<script type="module" src="game.js"></script>
 </body>
 </html>
