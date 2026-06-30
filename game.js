@@ -1,10 +1,19 @@
 // ===== Meltie Catch — Three.js mini-game =====
 // 落ちてくる Melties をタップして集める。ノーペナルティのカジュアル設計（kawaii=低ストレス）。
 // 既存のキャラ透過PNGをスプライトとして使用。失敗なし・スコア&ベスト記録。
+// Game Center 制御: window.MeltieCatch.activate()/deactivate()（非表示中はRAF停止）。
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 
-const wrap = document.getElementById("gameWrap");
-if (wrap && window.WebGLRenderingContext) start(wrap);
+let _started = false, _active = false, _running = false, _resume = null;
+window.MeltieCatch = {
+  activate() {
+    _active = true;
+    const wrap = document.getElementById("gameWrap");
+    if (!_started && wrap && window.WebGLRenderingContext) { _started = true; start(wrap); }
+    else if (_resume) _resume();
+  },
+  deactivate() { _active = false; },
+};
 
 function start(wrap) {
   const CHARS = ["melty", "game", "book", "screen", "popcorn", "icecream", "sleep"];
@@ -27,13 +36,33 @@ function start(wrap) {
   const loader = new THREE.TextureLoader();
   const tex = CHARS.map((c) => { const t = loader.load(`images/characters/${c}.png`); t.colorSpace = THREE.SRGBColorSpace; return t; });
 
+  const TIME_LIMIT = 30;
   const melts = [];
-  let score = 0, combo = 0, spawnT = 0, t0 = performance.now(), last = t0;
+  let score = 0, combo = 0, spawnT = 0, t0 = performance.now(), last = t0, playing = false, timeLeft = TIME_LIMIT;
   let best = +(localStorage.getItem("melties_best") || 0);
-  const scoreEl = document.getElementById("gScore");
-  const bestEl = document.getElementById("gBest");
-  const comboEl = document.getElementById("gCombo");
+  const scoreEl = document.getElementById("cScore");
+  const bestEl = document.getElementById("cBest");
+  const comboEl = document.getElementById("cCombo");
+  const timeEl = document.getElementById("cTime");
+  const startBtn = document.getElementById("catchStart");
   if (bestEl) bestEl.textContent = best;
+  if (timeEl) timeEl.textContent = TIME_LIMIT;
+
+  function reset() {
+    for (const s of melts) { scene.remove(s); s.material.dispose(); }
+    melts.length = 0;
+    score = 0; combo = 0; spawnT = 0; t0 = performance.now(); timeLeft = TIME_LIMIT;
+    if (scoreEl) scoreEl.textContent = 0; if (comboEl) comboEl.textContent = "";
+    if (timeEl) timeEl.textContent = TIME_LIMIT;
+    playing = true;
+  }
+  function endGame() {
+    playing = false;
+    if (comboEl) comboEl.textContent = "Time's up!";
+    if (score > best) { best = score; localStorage.setItem("melties_best", best); if (bestEl) bestEl.textContent = best; }
+    if (startBtn) startBtn.textContent = startBtn.dataset.restart || "Play again";
+  }
+  startBtn && startBtn.addEventListener("click", () => { reset(); startBtn.textContent = "Restart"; });
 
   function spawn() {
     const i = (Math.random() * CHARS.length) | 0;
@@ -60,6 +89,7 @@ function start(wrap) {
     } catch (e) {}
   }
   function onDown(ev) {
+    if (!playing) return;
     const r = renderer.domElement.getBoundingClientRect();
     const x = (ev.clientX ?? ev.touches?.[0]?.clientX) - r.left;
     const y = (ev.clientY ?? ev.touches?.[0]?.clientY) - r.top;
@@ -78,11 +108,20 @@ function start(wrap) {
   }
   renderer.domElement.addEventListener("pointerdown", onDown);
 
+  _resume = () => { if (!_running) { _running = true; last = performance.now(); requestAnimationFrame(loop); } };
   function loop(now) {
+    if (!_active) { _running = false; return; } // paused when tab hidden
     const dt = Math.min((now - last) / 1000, 0.05); last = now;
-    spawnT += dt;
-    const interval = Math.max(0.45, 1.0 - (now - t0) / 70000); // gently speeds up
-    if (spawnT > interval) { spawnT = 0; spawn(); }
+    if (playing) {
+      timeLeft -= dt;
+      if (timeEl) timeEl.textContent = Math.max(0, Math.ceil(timeLeft));
+      if (timeLeft <= 0) endGame();
+    }
+    if (playing) {
+      spawnT += dt;
+      const interval = Math.max(0.45, 1.0 - (now - t0) / 70000); // gently speeds up
+      if (spawnT > interval) { spawnT = 0; spawn(); }
+    }
     for (let k = melts.length - 1; k >= 0; k--) {
       const s = melts[k], u = s.userData;
       if (u.pop) {
@@ -103,7 +142,7 @@ function start(wrap) {
     renderer.render(scene, cam);
     requestAnimationFrame(loop);
   }
-  requestAnimationFrame(loop);
+  _running = true; requestAnimationFrame(loop);
 
   addEventListener("resize", () => {
     W = wrap.clientWidth || W; H = Math.round(W * 0.8);

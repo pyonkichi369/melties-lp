@@ -118,16 +118,67 @@
   </div>
 </section>
 
-<!-- GAME (Three.js) -->
+<!-- GAME CENTER (arcade hub: Puyo + Catch) -->
 <section class="sec game">
-  <h2 data-i18n="game">Meltie Catch</h2>
-  <p class="hint" data-i18n="gamehint">Tap the falling Melties!</p>
-  <div class="game-hud">
-    <span>Score <b id="gScore">0</b></span>
-    <span class="g-combo" id="gCombo"></span>
-    <span>Best <b id="gBest">0</b></span>
+  <div class="arcade-cabinet">
+    <div class="arcade-marquee"><h2 data-i18n="game">Game Center</h2></div>
+
+    <div class="arcade-tabs" id="arcadeTabs">
+      <button class="arcade-tab active" data-game="puyo" data-i18n="g_puyo">Meltie Puyo</button>
+      <button class="arcade-tab" data-game="tsum" data-i18n="g_tsum">Meltie Tsum</button>
+      <button class="arcade-tab" data-game="catch" data-i18n="g_catch">Meltie Catch</button>
+    </div>
+
+    <div class="arcade-screen">
+      <!-- Meltie Puyo -->
+      <div class="arcade-panel" id="panel-puyo">
+        <div class="game-hud">
+          <span>Score <b id="pScore">0</b></span>
+          <span class="g-combo" id="pCombo"></span>
+          <span>Best <b id="pBest">0</b></span>
+        </div>
+        <div class="puyo-stage">
+          <canvas id="puyoCanvas" aria-label="Meltie Puyo board"></canvas>
+          <div class="puyo-side">
+            <div class="puyo-next" id="puyoNext"></div>
+          </div>
+        </div>
+        <div class="puyo-controls">
+          <button data-act="left" aria-label="move left">◀</button>
+          <button data-act="rotate" class="rot" aria-label="rotate">↻</button>
+          <button data-act="down" aria-label="soft drop">▼</button>
+          <button data-act="right" aria-label="move right">▶</button>
+        </div>
+        <button id="puyoStart" class="arcade-start" data-restart="Restart" data-i18n="gamestart">Start</button>
+      </div>
+
+      <!-- Meltie Tsum -->
+      <div class="arcade-panel" id="panel-tsum" hidden>
+        <div class="game-hud">
+          <span>Score <b id="tScore">0</b></span>
+          <span>Time <b id="tTime">60</b></span>
+          <span class="g-combo" id="tCombo"></span>
+          <span>Best <b id="tBest">0</b></span>
+        </div>
+        <div class="tsum-stage"><canvas id="tsumCanvas" aria-label="Meltie Tsum board"></canvas></div>
+        <p class="tsum-tip" data-i18n="tsumhint">Trace 3+ same Melties!</p>
+        <button id="tsumStart" class="arcade-start" data-restart="Play again" data-i18n="gamestart">Start</button>
+      </div>
+
+      <!-- Meltie Catch -->
+      <div class="arcade-panel" id="panel-catch" hidden>
+        <div class="game-hud">
+          <span>Score <b id="cScore">0</b></span>
+          <span>Time <b id="cTime">30</b></span>
+          <span class="g-combo" id="cCombo"></span>
+          <span>Best <b id="cBest">0</b></span>
+        </div>
+        <div id="gameWrap" class="game-wrap" aria-label="Meltie Catch mini-game"></div>
+        <button id="catchStart" class="arcade-start" data-restart="Play again" data-i18n="gamestart">Start</button>
+      </div>
+    </div>
   </div>
-  <div id="gameWrap" class="game-wrap" aria-label="Meltie Catch mini-game"></div>
+  <p class="hint" data-i18n="gamehint">Pick a game and play!</p>
 </section>
 
 <!-- FOLLOW -->
@@ -145,6 +196,15 @@
   <p class="love" data-i18n="love">Made with Love.</p>
 </footer>
 
+<!-- WORLD LIGHTBOX -->
+<div class="wmodal" id="worldModal" role="dialog" aria-modal="true" aria-label="World view" hidden>
+  <figure class="wmodal-fig">
+    <img id="worldImg" src="" alt="">
+    <figcaption id="worldCap"></figcaption>
+  </figure>
+  <button class="modal-x" id="worldX" aria-label="close">×</button>
+</div>
+
 <!-- CHARACTER MODAL -->
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Meltie profile" hidden>
   <div class="modal-card" id="modalCard"></div>
@@ -152,6 +212,9 @@
 </div>
 
 <script src="app.js"></script>
+<script src="puyo.js"></script>
+<script src="tsum.js"></script>
 <script type="module" src="game.js"></script>
+<script src="arcade.js"></script>
 </body>
 </html>

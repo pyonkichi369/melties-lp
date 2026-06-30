@@ -3,13 +3,13 @@ const I18N = {
   en: { watch:"Watch on TikTok", friends:"Meet the Melties", swipe:"Swipe → tap a Meltie",
         story:"Story", latest:"Latest Melties", seeall:"See all on TikTok",
         world:"World", more:"…and more, coming soon.", goods:"Goods", soon:"Coming Soon",
-        game:"Meltie Catch", gamehint:"Tap the falling Melties!",
+        game:"Game Center", gamehint:"Pick a game and play!", gamestart:"Start", g_puyo:"Meltie Puyo", g_tsum:"Meltie Tsum", g_catch:"Meltie Catch", tsumhint:"Trace 3+ of the same Meltie!",
         follow:"Follow us", love:"Made with Love.", loves:"Loves", personality:"Personality",
         modalcta:"Watch on TikTok", toggle:"日本語" },
   jp: { watch:"TikTokで見る", friends:"なかまたち", swipe:"よこにスクロール → タップでプロフィール",
         story:"ストーリー", latest:"最新の Melties", seeall:"TikTokで全部見る",
         world:"ワールド", more:"…ほかにも、近日公開。", goods:"グッズ", soon:"近日公開",
-        game:"メルティキャッチ", gamehint:"落ちてくるメルティをタップ！",
+        game:"ゲームセンター", gamehint:"ゲームを選んであそぼう！", gamestart:"スタート", g_puyo:"めるてぃーぷよ", g_tsum:"めるてぃーツム", g_catch:"めるてぃーキャッチ", tsumhint:"おなじ仲間を3つ以上なぞってね！",
         follow:"フォローする", love:"Made with Love.", loves:"好きなもの", personality:"せいかく",
         modalcta:"動画で見る", toggle:"English" },
 };
@@ -73,7 +73,7 @@ function render() {
       ${charImg(c.key,c.en)}<span class="ch-name">${c.en}</span></button>`).join("");
   document.getElementById("story").innerHTML = STORY[LANG].map(s=>`<p class="reveal">${s}</p>`).join("");
   document.getElementById("tiktokRail").innerHTML = ttCards();
-  document.getElementById("world").innerHTML = WORLD.map((w,i)=>`<div class="tile reveal" style="--d:${i*50}ms"><div class="tile-img"><img src="images/world/${w.img}.jpg" alt="${w.en} — a Melties world" loading="lazy"></div><span>${w[LANG]}</span></div>`).join("");
+  document.getElementById("world").innerHTML = WORLD.map((w,i)=>`<button class="tile reveal" style="--d:${i*50}ms" data-w="${i}"><div class="tile-img"><img src="images/world/${w.img}.jpg" alt="${w.en} — a Melties world" loading="lazy"></div><span>${w[LANG]}</span></button>`).join("");
   document.getElementById("goods").innerHTML = GOODS.map((g,i)=>`<div class="tile reveal" style="--d:${i*50}ms"><div class="tile-ph"></div><span>${g[LANG]}</span></div>`).join("");
 
   setupReveal();
@@ -95,6 +95,24 @@ function openChar(i){
   modalX.focus();
 }
 document.getElementById("rail").addEventListener("click", e=>{ const b=e.target.closest(".ch"); if(b) openChar(+b.dataset.i); });
+
+// ===== world lightbox (tap a world → enlarge) =====
+const wModal = document.getElementById("worldModal"), wImg = document.getElementById("worldImg"), wCap = document.getElementById("worldCap");
+let wLastFocus = null;
+function openWorld(i){
+  const w = WORLD[i];
+  wLastFocus = document.activeElement;
+  wImg.src = `images/world/${w.img}_full.jpg`;
+  wImg.alt = `${w.en} — a Melties world`;
+  wCap.textContent = w[LANG];
+  wModal.hidden = false;
+  document.getElementById("worldX").focus();
+}
+function closeWorld(){ wModal.hidden = true; wImg.src = ""; if(wLastFocus) wLastFocus.focus(); }
+document.getElementById("world").addEventListener("click", e=>{ const b=e.target.closest(".tile"); if(b) openWorld(+b.dataset.w); });
+document.getElementById("worldX").addEventListener("click", closeWorld);
+wModal.addEventListener("click", e=>{ if(e.target===wModal) closeWorld(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && !wModal.hidden) closeWorld(); });
 function closeModal(){ modal.hidden = true; if(lastFocus) lastFocus.focus(); }
 modalX.addEventListener("click", closeModal);
 modal.addEventListener("click", e=>{ if(e.target===modal) closeModal(); });
