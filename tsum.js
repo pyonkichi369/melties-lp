@@ -19,7 +19,7 @@ function initTsum(cv) {
         comboEl = document.getElementById("tCombo"), timeEl = document.getElementById("tTime");
   const startBtn = document.getElementById("tsumStart");
 
-  let cell = 50, grid = null, chain = [], dragging = false;
+  let cell = 50, grid = null, chain = [], dragging = false, pops = [], actx;
   let playing = false, paused = false, running = false;
   let score = 0, timeLeft = T_LIMIT, last = 0;
   let best = +(localStorage.getItem("melties_tsum_best") || 0);
@@ -29,8 +29,9 @@ function initTsum(cv) {
   const randType = () => (Math.random() * T_TYPES.length) | 0;
 
   function fit() {
-    const maxW = Math.min(cv.parentElement.clientWidth - 8, 360);
-    cell = Math.max(40, Math.floor(maxW / T_COLS));
+    const wCell = Math.min(cv.parentElement.clientWidth - 8, 360) / T_COLS;
+    const hCell = (window.innerHeight * 0.56) / T_ROWS; // keep board within viewport height
+    cell = Math.max(34, Math.floor(Math.min(wCell, hCell)));
     cv.width = cell * T_COLS; cv.height = cell * T_ROWS;
     cv.style.width = cv.width + "px"; cv.style.height = cv.height + "px";
     draw();
@@ -57,14 +58,26 @@ function initTsum(cv) {
     if (chain.some(q => q.r === p.r && q.c === p.c)) return;
     if (Math.abs(p.r - last.r) <= 1 && Math.abs(p.c - last.c) <= 1 && grid[p.r][p.c] === t0) chain.push(p);
   }
+  function popSound(len) {
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.type = "sine"; o.frequency.value = 420 + Math.min(len, 10) * 40;
+      o.connect(g); g.connect(actx.destination);
+      g.gain.setValueAtTime(0.18, actx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + 0.18);
+      o.start(); o.stop(actx.currentTime + 0.2);
+    } catch (e) {}
+  }
   function resolve() {
     if (chain.length >= 3) {
       const len = chain.length;
-      chain.forEach(p => grid[p.r][p.c] = null);
-      score += len * 10 * (len >= 5 ? 2 : 1);
+      chain.forEach(p => { pops.push({ x: p.c * cell + cell / 2, y: p.r * cell + cell / 2, t: 0, tint: T_TYPES[grid[p.r][p.c]].tint }); grid[p.r][p.c] = null; });
+      score += len * (len + 1) * 5; // escalating long-chain bonus (3→60, 5→150, 7→280)
       if (scoreEl) scoreEl.textContent = score;
-      if (comboEl) comboEl.textContent = len + " tsum!";
+      if (comboEl) comboEl.textContent = (len >= 7 ? "AMAZING! " : len >= 5 ? "Great! " : "") + len + " tsum!";
       if (score > best) { best = score; localStorage.setItem("melties_tsum_best", best); if (bestEl) bestEl.textContent = best; }
+      popSound(len);
       gravity();
     }
     chain = [];
@@ -108,6 +121,12 @@ function initTsum(cv) {
       chain.forEach((p, i) => { const x = p.c * cell + cell / 2, y = p.r * cell + cell / 2; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
       ctx.stroke(); ctx.restore();
     }
+    // pop bursts
+    pops.forEach(p => {
+      const k = p.t / 0.3; ctx.save(); ctx.globalAlpha = Math.max(0, 1 - k);
+      ctx.strokeStyle = p.tint; ctx.lineWidth = cell * 0.14 * (1 - k);
+      ctx.beginPath(); ctx.arc(p.x, p.y, cell * 0.28 + cell * 0.55 * k, 0, 7); ctx.stroke(); ctx.restore();
+    });
     if (!playing) {
       ctx.fillStyle = "rgba(36,26,64,.5)"; ctx.fillRect(0, 0, cv.width, cv.height);
     }
@@ -116,6 +135,7 @@ function initTsum(cv) {
     if (paused) { running = false; return; }
     const dt = Math.min((now - last) / 1000, 0.05); last = now;
     if (playing) { timeLeft -= dt; if (timeEl) timeEl.textContent = Math.max(0, Math.ceil(timeLeft)); if (timeLeft <= 0) endGame(); }
+    for (let i = pops.length - 1; i >= 0; i--) { pops[i].t += dt; if (pops[i].t > 0.3) pops.splice(i, 1); }
     draw();
     requestAnimationFrame(loop);
   }

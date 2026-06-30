@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Melties Games — Play Meltie Puyo, Tsum & Catch</title>
+<meta name="description" content="Play free Melties mini-games: Meltie Puyo (match-4 chains), Meltie Tsum (trace & pop), and Meltie Catch. The world's cutest melting friends, now playable.">
+<link rel="canonical" href="https://melties.world/play/">
+<meta property="og:title" content="Melties Games — Play the cutest melting friends">
+<meta property="og:description" content="Meltie Puyo, Meltie Tsum, Meltie Catch — free mini-games.">
+<meta property="og:image" content="https://melties.world/images/world/arcade.jpg">
+<meta property="og:url" content="https://melties.world/play/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#241a40">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"VideoGame","name":"Melties Games","url":"https://melties.world/play/",
+"genre":["Puzzle","Casual"],"gamePlatform":"Web browser","applicationCategory":"Game",
+"inLanguage":"en","publisher":{"@type":"Organization","name":"Melties","url":"https://melties.world/"},
+"description":"Free Melties mini-games: Meltie Puyo, Meltie Tsum, and Meltie Catch."}
+</script>
+</head>
+<body class="play-body">
+
+<header class="play-bar">
+  <a class="play-home" href="./" aria-label="back to Melties">◀ <span data-i18n="back">Melties</span></a>
+  <button class="lang-toggle play-lang" id="langToggle" aria-label="language">日本語</button>
+</header>
+
+<main class="play-main">
+  <div class="play-host">
+    <img class="play-host-img" src="images/characters/game.png" alt="Game, your Meltie arcade host">
+    <div class="play-bubble" data-i18n="hosthi">Welcome! Let's play!</div>
+  </div>
+
+  <section class="sec game">
+    <div class="arcade-cabinet">
+      <div class="arcade-marquee"><h2 data-i18n="game">Game Center</h2></div>
+
+      <div class="arcade-tabs" id="arcadeTabs">
+        <button class="arcade-tab active" data-game="puyo" data-i18n="g_puyo">Meltie Puyo</button>
+        <button class="arcade-tab" data-game="tsum" data-i18n="g_tsum">Meltie Tsum</button>
+        <button class="arcade-tab" data-game="catch" data-i18n="g_catch">Meltie Catch</button>
+      </div>
+
+      <div class="arcade-screen">
+        <!-- Meltie Puyo -->
+        <div class="arcade-panel" id="panel-puyo">
+          <div class="game-hud">
+            <span>Score <b id="pScore">0</b></span>
+            <span class="g-combo" id="pCombo"></span>
+            <span>Best <b id="pBest">0</b></span>
+          </div>
+          <div class="puyo-stage">
+            <canvas id="puyoCanvas" aria-label="Meltie Puyo board"></canvas>
+            <div class="puyo-side"><div class="puyo-next" id="puyoNext"></div></div>
+          </div>
+          <div class="puyo-controls">
+            <button data-act="left" aria-label="move left">◀</button>
+            <button data-act="rotate" class="rot" aria-label="rotate">↻</button>
+            <button data-act="down" aria-label="soft drop">▼</button>
+            <button data-act="right" aria-label="move right">▶</button>
+          </div>
+          <button id="puyoStart" class="arcade-start" data-restart="Restart" data-i18n="gamestart">Start</button>
+        </div>
+
+        <!-- Meltie Tsum -->
+        <div class="arcade-panel" id="panel-tsum" hidden>
+          <div class="game-hud">
+            <span>Score <b id="tScore">0</b></span>
+            <span>Time <b id="tTime">60</b></span>
+            <span class="g-combo" id="tCombo"></span>
+            <span>Best <b id="tBest">0</b></span>
+          </div>
+          <div class="tsum-stage"><canvas id="tsumCanvas" aria-label="Meltie Tsum board"></canvas></div>
+          <p class="tsum-tip" data-i18n="tsumhint">Trace 3+ of the same Meltie!</p>
+          <button id="tsumStart" class="arcade-start" data-restart="Play again" data-i18n="gamestart">Start</button>
+        </div>
+
+        <!-- Meltie Catch -->
+        <div class="arcade-panel" id="panel-catch" hidden>
+          <div class="game-hud">
+            <span>Score <b id="cScore">0</b></span>
+            <span>Time <b id="cTime">30</b></span>
+            <span class="g-combo" id="cCombo"></span>
+            <span>Best <b id="cBest">0</b></span>
+          </div>
+          <div id="gameWrap" class="game-wrap" aria-label="Meltie Catch mini-game"></div>
+          <button id="catchStart" class="arcade-start" data-restart="Play again" data-i18n="gamestart">Start</button>
+        </div>
+      </div>
+    </div>
+    <p class="hint" data-i18n="gamehint">Pick a game and play!</p>
+  </section>
+</main>
+
+<!-- minimal i18n for the play page (independent of app.js) -->
+<script>
+(function(){
+  const I = {
+    en:{ back:"Melties", game:"Game Center", gamehint:"Pick a game and play!", gamestart:"Start",
+         g_puyo:"Meltie Puyo", g_tsum:"Meltie Tsum", g_catch:"Meltie Catch", tsumhint:"Trace 3+ of the same Meltie!",
+         hosthi:"Welcome! Pick a game!", toggle:"日本語" },
+    jp:{ back:"Melties", game:"ゲームセンター", gamehint:"ゲームを選んであそぼう！", gamestart:"スタート",
+         g_puyo:"めるてぃーぷよ", g_tsum:"めるてぃーツム", g_catch:"めるてぃーキャッチ", tsumhint:"おなじ仲間を3つ以上なぞってね！",
+         hosthi:"いらっしゃい！どれであそぶ？", toggle:"English" }
+  };
+  let lang = localStorage.getItem("melties_lang") || "en";
+  function apply(){
+    const t = I[lang]; document.documentElement.lang = lang==="jp"?"ja":"en";
+    document.querySelectorAll("[data-i18n]").forEach(el=>{ const v=t[el.dataset.i18n]; if(v!=null) el.textContent=v; });
+    document.getElementById("langToggle").textContent = t.toggle;
+  }
+  document.getElementById("langToggle").addEventListener("click", ()=>{ lang = lang==="en"?"jp":"en"; localStorage.setItem("melties_lang", lang); apply(); });
+  apply();
+})();
+</script>
+<script src="puyo.js"></script>
+<script src="tsum.js"></script>
+<script type="module" src="game.js"></script>
+<script src="arcade.js"></script>
+</body>
+</html>

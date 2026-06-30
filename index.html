@@ -118,67 +118,14 @@
   </div>
 </section>
 
-<!-- GAME CENTER (arcade hub: Puyo + Catch) -->
-<section class="sec game">
-  <div class="arcade-cabinet">
-    <div class="arcade-marquee"><h2 data-i18n="game">Game Center</h2></div>
-
-    <div class="arcade-tabs" id="arcadeTabs">
-      <button class="arcade-tab active" data-game="puyo" data-i18n="g_puyo">Meltie Puyo</button>
-      <button class="arcade-tab" data-game="tsum" data-i18n="g_tsum">Meltie Tsum</button>
-      <button class="arcade-tab" data-game="catch" data-i18n="g_catch">Meltie Catch</button>
-    </div>
-
-    <div class="arcade-screen">
-      <!-- Meltie Puyo -->
-      <div class="arcade-panel" id="panel-puyo">
-        <div class="game-hud">
-          <span>Score <b id="pScore">0</b></span>
-          <span class="g-combo" id="pCombo"></span>
-          <span>Best <b id="pBest">0</b></span>
-        </div>
-        <div class="puyo-stage">
-          <canvas id="puyoCanvas" aria-label="Meltie Puyo board"></canvas>
-          <div class="puyo-side">
-            <div class="puyo-next" id="puyoNext"></div>
-          </div>
-        </div>
-        <div class="puyo-controls">
-          <button data-act="left" aria-label="move left">◀</button>
-          <button data-act="rotate" class="rot" aria-label="rotate">↻</button>
-          <button data-act="down" aria-label="soft drop">▼</button>
-          <button data-act="right" aria-label="move right">▶</button>
-        </div>
-        <button id="puyoStart" class="arcade-start" data-restart="Restart" data-i18n="gamestart">Start</button>
-      </div>
-
-      <!-- Meltie Tsum -->
-      <div class="arcade-panel" id="panel-tsum" hidden>
-        <div class="game-hud">
-          <span>Score <b id="tScore">0</b></span>
-          <span>Time <b id="tTime">60</b></span>
-          <span class="g-combo" id="tCombo"></span>
-          <span>Best <b id="tBest">0</b></span>
-        </div>
-        <div class="tsum-stage"><canvas id="tsumCanvas" aria-label="Meltie Tsum board"></canvas></div>
-        <p class="tsum-tip" data-i18n="tsumhint">Trace 3+ same Melties!</p>
-        <button id="tsumStart" class="arcade-start" data-restart="Play again" data-i18n="gamestart">Start</button>
-      </div>
-
-      <!-- Meltie Catch -->
-      <div class="arcade-panel" id="panel-catch" hidden>
-        <div class="game-hud">
-          <span>Score <b id="cScore">0</b></span>
-          <span>Time <b id="cTime">30</b></span>
-          <span class="g-combo" id="cCombo"></span>
-          <span>Best <b id="cBest">0</b></span>
-        </div>
-        <div id="gameWrap" class="game-wrap" aria-label="Meltie Catch mini-game"></div>
-        <button id="catchStart" class="arcade-start" data-restart="Play again" data-i18n="gamestart">Start</button>
-      </div>
-    </div>
-  </div>
-  <p class="hint" data-i18n="gamehint">Pick a game and play!</p>
+<!-- GAME CENTER (entry → dedicated play page) -->
+<section class="sec arcade-entry">
+  <h2 data-i18n="game">Game Center</h2>
+  <a class="arcade-entry-card" href="play.html" data-track="arcade-entry">
+    <img src="images/world/arcade.jpg" alt="Melties Game Center — play mini-games" loading="lazy">
+    <span class="arcade-entry-badge"><span data-i18n="playgames">Play games</span> ▶</span>
+  </a>
+  <p class="hint" data-i18n="gameentry">3 free Meltie mini-games — Puyo, Tsum & Catch!</p>
 </section>
 
 <!-- FOLLOW -->
@@ -212,9 +159,5 @@
 </div>
 
 <script src="app.js"></script>
-<script src="puyo.js"></script>
-<script src="tsum.js"></script>
-<script type="module" src="game.js"></script>
-<script src="arcade.js"></script>
 </body>
 </html>

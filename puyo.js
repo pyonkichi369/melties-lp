@@ -23,8 +23,10 @@ function initPuyo(cv) {
 
   let cell = 48;
   function fit() {
-    const maxW = Math.min(cv.parentElement.clientWidth - 120, 300);
-    cell = Math.max(34, Math.floor(maxW / COLS));
+    const reserve = innerWidth < 560 ? 92 : 120; // space for NEXT/side column
+    const wCell = Math.min(cv.parentElement.clientWidth - reserve, 300) / COLS;
+    const hCell = (window.innerHeight * 0.54) / ROWS; // keep board within viewport height
+    cell = Math.max(24, Math.floor(Math.min(wCell, hCell)));
     cv.width = cell * COLS; cv.height = cell * ROWS;
     cv.style.width = cv.width + "px"; cv.style.height = cv.height + "px";
     draw();

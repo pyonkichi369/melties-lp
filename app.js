@@ -3,15 +3,15 @@ const I18N = {
   en: { watch:"Watch on TikTok", friends:"Meet the Melties", swipe:"Swipe → tap a Meltie",
         story:"Story", latest:"Latest Melties", seeall:"See all on TikTok",
         world:"World", more:"…and more, coming soon.", goods:"Goods", soon:"Coming Soon",
-        game:"Game Center", gamehint:"Pick a game and play!", gamestart:"Start", g_puyo:"Meltie Puyo", g_tsum:"Meltie Tsum", g_catch:"Meltie Catch", tsumhint:"Trace 3+ of the same Meltie!",
+        game:"Game Center", gamehint:"Pick a game and play!", gamestart:"Start", g_puyo:"Meltie Puyo", g_tsum:"Meltie Tsum", g_catch:"Meltie Catch", tsumhint:"Trace 3+ of the same Meltie!", gameentry:"3 free Meltie mini-games — Puyo, Tsum & Catch!",
         follow:"Follow us", love:"Made with Love.", loves:"Loves", personality:"Personality",
-        modalcta:"Watch on TikTok", toggle:"日本語" },
+        modalcta:"Watch on TikTok", playgames:"Play games", toggle:"日本語" },
   jp: { watch:"TikTokで見る", friends:"なかまたち", swipe:"よこにスクロール → タップでプロフィール",
         story:"ストーリー", latest:"最新の Melties", seeall:"TikTokで全部見る",
         world:"ワールド", more:"…ほかにも、近日公開。", goods:"グッズ", soon:"近日公開",
-        game:"ゲームセンター", gamehint:"ゲームを選んであそぼう！", gamestart:"スタート", g_puyo:"めるてぃーぷよ", g_tsum:"めるてぃーツム", g_catch:"めるてぃーキャッチ", tsumhint:"おなじ仲間を3つ以上なぞってね！",
+        game:"ゲームセンター", gamehint:"ゲームを選んであそぼう！", gamestart:"スタート", g_puyo:"めるてぃーぷよ", g_tsum:"めるてぃーツム", g_catch:"めるてぃーキャッチ", tsumhint:"おなじ仲間を3つ以上なぞってね！", gameentry:"めるてぃーのミニゲーム3つ — ぷよ・ツム・キャッチ！",
         follow:"フォローする", love:"Made with Love.", loves:"好きなもの", personality:"せいかく",
-        modalcta:"動画で見る", toggle:"English" },
+        modalcta:"動画で見る", playgames:"ゲームで遊ぶ", toggle:"English" },
 };
 
 const CHARS = [
@@ -90,6 +90,7 @@ function openChar(i){
   modalCard.className = "modal-card c-"+c.c;
   modalCard.innerHTML = `${charView(c)}<h3>${c.en}</h3>
     <dl><dt>${t.loves}</dt><dd>${c.like[LANG]}</dd><dt>${t.personality}</dt><dd>${c.p[LANG]}</dd></dl>
+    ${c.key === "game" ? `<a class="cta play-cta small" href="play.html" data-track="play-from-game">${t.playgames} ▶</a>` : ""}
     <a class="cta tiktok small" href="${TIKTOK_PROFILE}" target="_blank" rel="noopener" data-track="modal-tiktok">${t.modalcta}</a>`;
   modal.hidden = false;
   modalX.focus();
