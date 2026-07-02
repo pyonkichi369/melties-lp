@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Melties 3D Figures — Spin &amp; touch the cutest melting friends</title>
+<meta name="description" content="Play with all 7 Melties in 3D: spin, zoom and touch Melty, Game, Book, Screen, Popcorn, Ice Cream and Sleep. Interactive 3D figures of the world's cutest melting friends.">
+<link rel="canonical" href="https://melties.world/3d">
+<meta property="og:title" content="Melties 3D Figures — Spin &amp; touch">
+<meta property="og:description" content="All 7 Melties as interactive 3D figures. Spin, zoom, touch.">
+<meta property="og:image" content="https://melties.world/images/group.png">
+<meta property="og:url" content="https://melties.world/3d">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#FFF7ED">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script type="module" src="https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ItemList","name":"Melties 3D figures","url":"https://melties.world/3d",
+"itemListElement":[
+{"@type":"ListItem","position":1,"item":{"@type":"3DModel","name":"Melty","encoding":{"@type":"MediaObject","contentUrl":"https://melties.world/models/melty.glb","encodingFormat":"model/gltf-binary"}}},
+{"@type":"ListItem","position":2,"item":{"@type":"3DModel","name":"Game","encoding":{"@type":"MediaObject","contentUrl":"https://melties.world/models/game.glb","encodingFormat":"model/gltf-binary"}}},
+{"@type":"ListItem","position":3,"item":{"@type":"3DModel","name":"Book","encoding":{"@type":"MediaObject","contentUrl":"https://melties.world/models/book.glb","encodingFormat":"model/gltf-binary"}}},
+{"@type":"ListItem","position":4,"item":{"@type":"3DModel","name":"Screen","encoding":{"@type":"MediaObject","contentUrl":"https://melties.world/models/screen.glb","encodingFormat":"model/gltf-binary"}}},
+{"@type":"ListItem","position":5,"item":{"@type":"3DModel","name":"Popcorn","encoding":{"@type":"MediaObject","contentUrl":"https://melties.world/models/popcorn.glb","encodingFormat":"model/gltf-binary"}}},
+{"@type":"ListItem","position":6,"item":{"@type":"3DModel","name":"Ice Cream","encoding":{"@type":"MediaObject","contentUrl":"https://melties.world/models/icecream.glb","encodingFormat":"model/gltf-binary"}}},
+{"@type":"ListItem","position":7,"item":{"@type":"3DModel","name":"Sleep","encoding":{"@type":"MediaObject","contentUrl":"https://melties.world/models/sleep.glb","encodingFormat":"model/gltf-binary"}}}
+]}
+</script>
+</head>
+<body>
+
+<header class="play-bar">
+  <a class="play-home" href="./" aria-label="back to Melties">◀ <span>Melties</span></a>
+  <button class="lang-toggle play-lang" id="langToggle" aria-label="language">日本語</button>
+</header>
+
+<main class="fig-main">
+  <h1 class="fig-title" data-i18n="title">3D Figures</h1>
+  <p class="hint" data-i18n="hint">Spin, zoom &amp; touch!</p>
+
+  <div class="fig-stage">
+    <model-viewer id="stage" camera-controls auto-rotate touch-action="pan-y"
+      interaction-prompt="auto" shadow-intensity="1.1" exposure="1.15"
+      orientation="0deg -90deg 270deg" camera-orbit="0deg 82deg 108%"
+      min-camera-orbit="auto 30deg auto" max-camera-orbit="auto 130deg auto"
+      alt="Melties 3D figure"></model-viewer>
+    <div class="fig-load" id="figLoad" hidden><span data-i18n="loading">Loading…</span></div>
+  </div>
+
+  <div class="fig-rail" id="figRail" role="tablist" aria-label="choose a Meltie"></div>
+
+  <section class="fig-info">
+    <h2 id="figName">Melty</h2>
+    <dl><dt data-i18n="loves">Loves</dt><dd id="figLike"></dd>
+        <dt data-i18n="personality">Personality</dt><dd id="figP"></dd></dl>
+    <a class="cta tiktok small" href="https://www.tiktok.com/@melties.world" target="_blank" rel="noopener" data-track="fig-tiktok" data-i18n="watch">Watch on TikTok</a>
+  </section>
+</main>
+
+<footer class="footer">
+  <img class="logo small" src="images/logo.png" alt="Melties logo">
+  <p>© Melties</p>
+</footer>
+
+<script>
+(function(){
+  const I = {
+    en:{ title:"3D Figures", hint:"Spin, zoom & touch!", loading:"Loading…",
+         loves:"Loves", personality:"Personality", watch:"Watch on TikTok", toggle:"日本語" },
+    jp:{ title:"3Dフィギュア", hint:"まわして、さわってみてね！", loading:"読み込み中…",
+         loves:"好きなもの", personality:"せいかく", watch:"TikTokで見る", toggle:"English" }
+  };
+  const CHARS = [
+    {key:"melty",   en:"Melty",     c:"pink", like:{en:"Everyone",jp:"みんな"},           p:{en:"A curious leader who brings everyone together.",jp:"好奇心旺盛・みんなを集めるリーダー"}},
+    {key:"game",    en:"Game",      c:"lav",  like:{en:"Games",jp:"ゲーム"},              p:{en:"Zones out completely when focused.",jp:"集中すると周りが見えなくなる"}},
+    {key:"book",    en:"Book",      c:"lav",  like:{en:"Reading",jp:"読書"},             p:{en:"Calm and endlessly curious.",jp:"おだやかで好奇心いっぱい"}},
+    {key:"screen",  en:"Screen",    c:"mint", like:{en:"Videos & streams",jp:"動画・配信"},p:{en:"Bright — soaks up way too much info.",jp:"明るい・情報を吸収しすぎ"}},
+    {key:"popcorn", en:"Popcorn",   c:"pop",  like:{en:"Movies",jp:"映画"},              p:{en:"Cheerful and always excited.",jp:"明るくてワクワク大好き"}},
+    {key:"icecream",en:"Ice Cream", c:"pink", like:{en:"Ice cream",jp:"アイス"},          p:{en:"Sweet — makes everyone smile.",jp:"やさしくて、みんなをえがおに"}},
+    {key:"sleep",   en:"Sleep",     c:"lav",  like:{en:"Naps",jp:"お昼寝"},              p:{en:"Mellow and sleepy.",jp:"おだやか・のんびり星"}},
+  ];
+  let lang = localStorage.getItem("melties_lang") || "en";
+  let cur = Math.max(0, CHARS.findIndex(c => c.key === new URLSearchParams(location.search).get("c")));
+
+  const stage = document.getElementById("stage"), figLoad = document.getElementById("figLoad");
+  const rail = document.getElementById("figRail");
+
+  function applyLang(){
+    const t = I[lang]; document.documentElement.lang = lang==="jp"?"ja":"en";
+    document.querySelectorAll("[data-i18n]").forEach(el=>{ const v=t[el.dataset.i18n]; if(v!=null) el.textContent=v; });
+    document.getElementById("langToggle").textContent = t.toggle;
+    renderInfo();
+  }
+  function renderInfo(){
+    const c = CHARS[cur];
+    document.getElementById("figName").textContent = c.en;
+    document.getElementById("figLike").textContent = c.like[lang];
+    document.getElementById("figP").textContent = c.p[lang];
+  }
+  function select(i, push){
+    cur = i;
+    const c = CHARS[i];
+    figLoad.hidden = false;
+    stage.setAttribute("src", `models/${c.key}.glb`);
+    stage.setAttribute("alt", `${c.en} 3D figure`);
+    rail.querySelectorAll(".fig-ch").forEach((b,bi)=>{
+      b.classList.toggle("active", bi===i);
+      b.setAttribute("aria-selected", bi===i ? "true" : "false");
+    });
+    renderInfo();
+    if(push) history.replaceState(null, "", `?c=${c.key}`);
+    if(window.plausible) window.plausible(`fig-${c.key}`);
+  }
+  stage.addEventListener("load", ()=> figLoad.hidden = true);
+  stage.addEventListener("error", ()=> { figLoad.hidden = true; });
+
+  rail.innerHTML = CHARS.map((c,i)=>`
+    <button class="fig-ch c-${c.c}" role="tab" data-i="${i}" aria-label="${c.en}">
+      <img src="images/characters/${c.key}.webp" alt="" loading="lazy"><span>${c.en}</span></button>`).join("");
+  rail.addEventListener("click", e=>{ const b=e.target.closest(".fig-ch"); if(b) select(+b.dataset.i, true); });
+
+  document.getElementById("langToggle").addEventListener("click", ()=>{
+    lang = lang==="en"?"jp":"en"; localStorage.setItem("melties_lang", lang); applyLang();
+  });
+
+  applyLang();
+  select(cur, false);
+})();
+</script>
+</body>
+</html>

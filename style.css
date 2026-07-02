@@ -105,19 +105,43 @@ section .cta.small{display:flex;width:max-content}
   background:radial-gradient(120% 100% at 50% 18%,#ffe6f2,#e9ddff);--poster-color:transparent}
 .modal-card .ch-3d{width:88%}
 
-/* ---- on-demand 3D stage (2D art + "Touch in 3D" button) ---- */
+/* ---- "Touch in 3D" link on the character modal (opens /3d) ---- */
 .ch-stage{position:relative;width:88%;margin:0 auto 6px}
 .ch-stage .ch-art{width:100%;margin:0 auto}
-.ch-stage .ch-3d{width:100%}
 .view3d-btn{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);
-  display:inline-flex;align-items:center;gap:7px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:7px;cursor:pointer;text-decoration:none;
   font:inherit;font-weight:800;font-size:.85rem;color:#fff;
   padding:9px 16px;border:none;border-radius:999px;
   background:linear-gradient(135deg,var(--pink,#ff7eb6),#a78bfa);
   box-shadow:0 6px 16px rgba(120,80,160,.35);transition:transform .12s,box-shadow .12s;white-space:nowrap}
 .view3d-btn:hover{transform:translateX(-50%) translateY(-2px);box-shadow:0 9px 20px rgba(120,80,160,.45)}
 .view3d-btn:active{transform:translateX(-50%) translateY(0)}
-.ch-stage.loading .view3d-btn{opacity:.7;pointer-events:none}
+
+/* ---- /3d figures page ---- */
+.fig-main{max-width:520px;margin:0 auto;padding:10px 16px 40px}
+.fig-title{font-family:"Mochiy Pop One",sans-serif;color:var(--ink,#4a3b56);text-align:center;font-size:1.5rem;margin:10px 0 2px}
+.fig-main .hint{text-align:center;margin:0 0 12px}
+.fig-stage{position:relative;background:radial-gradient(circle at 50% 32%,#fff 0%,#f6e7ff 78%,#efdcff 100%);
+  border:3px solid #fff;border-radius:30px;box-shadow:0 14px 34px rgba(150,110,190,.22);overflow:hidden}
+.fig-stage model-viewer{width:100%;height:min(56vh,440px);--poster-color:transparent}
+.fig-load{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-weight:800;color:var(--ink,#4a3b56);background:rgba(255,247,237,.55);pointer-events:none}
+.fig-load[hidden]{display:none}
+.fig-rail{display:flex;gap:10px;overflow-x:auto;padding:14px 4px 6px;-webkit-overflow-scrolling:touch}
+.fig-ch{flex:0 0 auto;width:74px;border:3px solid transparent;border-radius:20px;background:#fff;
+  padding:6px 4px 7px;cursor:pointer;font:inherit;font-weight:800;font-size:.68rem;color:var(--ink,#4a3b56);
+  box-shadow:0 6px 14px rgba(150,110,190,.16);transition:transform .12s}
+.fig-ch img{width:100%;aspect-ratio:1;object-fit:contain;display:block}
+.fig-ch span{display:block;text-align:center;margin-top:2px}
+.fig-ch:hover{transform:translateY(-2px)}
+.fig-ch.active{border-color:var(--pink,#ff7eb6)}
+.fig-info{background:rgba(255,255,255,.8);border:3px solid #fff;border-radius:26px;padding:18px 20px;margin-top:12px;
+  box-shadow:0 10px 26px rgba(150,110,190,.16)}
+.fig-info h2{font-family:"Mochiy Pop One",sans-serif;color:var(--ink,#4a3b56);margin:0 0 8px;text-align:center}
+.fig-info dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;margin:0 0 14px}
+.fig-info dt{font-weight:800;color:var(--pink,#ff7eb6)}
+.fig-info dd{margin:0}
+.fig-info .cta{margin:0 auto}
 
 /* ---- world tile button reset + lightbox ---- */
 button.tile{border:none;background:none;padding:0;cursor:pointer;font:inherit;color:inherit;width:100%}
