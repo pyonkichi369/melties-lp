@@ -12,7 +12,7 @@ orient.html
 view.html
 viewer.html
 # unreferenced model variants (experiments; only the 7 shipped GLBs are committed)
-models/melty.glb
+models/melty_hy3d.glb
 models/melty_hq.glb
 models/melty_hy3d_color.glb
 models/melty_raw.glb

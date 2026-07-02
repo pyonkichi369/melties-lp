@@ -40,12 +40,10 @@ let LANG = localStorage.getItem("melties_lang") || "en";
 
 // characters that have a 3D model in models/<key>.glb (others fall back to the PNG)
 const GLB_CHARS = new Set(["melty", "game", "book", "screen", "popcorn", "icecream", "sleep"]);
-// per-character model filename override (default: <key>.glb)
-const MODEL3D = { melty: "melty_hy3d.glb" };
-const glbFile = (k) => MODEL3D[k] || `${k}.glb`;
-// TripoSR-pipeline GLBs are exported lying on their back; melty (Hunyuan3D) is already upright
-const ORIENT3D = { melty: "0deg 0deg 0deg" };
-const glbOrient = (k) => ORIENT3D[k] || "0deg -90deg 270deg";
+// all 7 GLBs come from the TripoSR pipeline, which exports models lying on
+// their back — stood upright via the model-viewer orientation attribute
+const glbFile = (k) => `${k}.glb`;
+const glbOrient = (k) => "0deg -90deg 270deg";
 // modal view: show 2D art first; the heavy GLB loads only when the "Touch in 3D" button is tapped
 const charView = (c) => GLB_CHARS.has(c.key)
   ? `<div class="ch-stage" data-glb="${glbFile(c.key)}" data-orient="${glbOrient(c.key)}" data-alt="${c.en}">
