@@ -105,6 +105,20 @@ section .cta.small{display:flex;width:max-content}
   background:radial-gradient(120% 100% at 50% 18%,#ffe6f2,#e9ddff);--poster-color:transparent}
 .modal-card .ch-3d{width:88%}
 
+/* ---- on-demand 3D stage (2D art + "Touch in 3D" button) ---- */
+.ch-stage{position:relative;width:88%;margin:0 auto 6px}
+.ch-stage .ch-art{width:100%;margin:0 auto}
+.ch-stage .ch-3d{width:100%}
+.view3d-btn{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);
+  display:inline-flex;align-items:center;gap:7px;cursor:pointer;
+  font:inherit;font-weight:800;font-size:.85rem;color:#fff;
+  padding:9px 16px;border:none;border-radius:999px;
+  background:linear-gradient(135deg,var(--pink,#ff7eb6),#a78bfa);
+  box-shadow:0 6px 16px rgba(120,80,160,.35);transition:transform .12s,box-shadow .12s;white-space:nowrap}
+.view3d-btn:hover{transform:translateX(-50%) translateY(-2px);box-shadow:0 9px 20px rgba(120,80,160,.45)}
+.view3d-btn:active{transform:translateX(-50%) translateY(0)}
+.ch-stage.loading .view3d-btn{opacity:.7;pointer-events:none}
+
 /* ---- world tile button reset + lightbox ---- */
 button.tile{border:none;background:none;padding:0;cursor:pointer;font:inherit;color:inherit;width:100%}
 button.tile:active{transform:scale(.96)}

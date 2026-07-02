@@ -1,3 +1,21 @@
 .DS_Store
 node_modules/
 .wrangler/
+_triposr/
+# dev tools (live in the melties pipeline repo context, not the public LP)
+gen3d.py
+colorize.py
+make_standee.py
+compare.html
+hy3d_compare.html
+orient.html
+view.html
+viewer.html
+# unreferenced model variants (experiments; only the 7 shipped GLBs are committed)
+models/melty.glb
+models/melty_hq.glb
+models/melty_hy3d_color.glb
+models/melty_raw.glb
+models/melty_s25.glb
+models/melty_s45.glb
+models/_src/

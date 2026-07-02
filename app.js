@@ -5,13 +5,13 @@ const I18N = {
         world:"World", more:"…and more, coming soon.", goods:"Goods", soon:"Coming Soon",
         game:"Game Center", gamehint:"Pick a game and play!", gamestart:"Start", g_puyo:"Meltie Puyo", g_tsum:"Meltie Tsum", g_catch:"Meltie Catch", tsumhint:"Trace 3+ of the same Meltie!", gameentry:"3 free Meltie mini-games — Puyo, Tsum & Catch!",
         follow:"Follow us", love:"Made with Love.", loves:"Loves", personality:"Personality",
-        modalcta:"Watch on TikTok", playgames:"Play games", toggle:"日本語" },
+        modalcta:"Watch on TikTok", playgames:"Play games", view3d:"Touch in 3D", view3dload:"Loading 3D…", toggle:"日本語" },
   jp: { watch:"TikTokで見る", friends:"なかまたち", swipe:"よこにスクロール → タップでプロフィール",
         story:"ストーリー", latest:"最新の Melties", seeall:"TikTokで全部見る",
         world:"ワールド", more:"…ほかにも、近日公開。", goods:"グッズ", soon:"近日公開",
         game:"ゲームセンター", gamehint:"ゲームを選んであそぼう！", gamestart:"スタート", g_puyo:"めるてぃーぷよ", g_tsum:"めるてぃーツム", g_catch:"めるてぃーキャッチ", tsumhint:"おなじ仲間を3つ以上なぞってね！", gameentry:"めるてぃーのミニゲーム3つ — ぷよ・ツム・キャッチ！",
         follow:"フォローする", love:"Made with Love.", loves:"好きなもの", personality:"せいかく",
-        modalcta:"動画で見る", playgames:"ゲームで遊ぶ", toggle:"English" },
+        modalcta:"動画で見る", playgames:"ゲームで遊ぶ", view3d:"3Dで触れる", view3dload:"3D読み込み中…", toggle:"English" },
 };
 
 const CHARS = [
@@ -39,27 +39,38 @@ const VIDEOS = [];
 let LANG = localStorage.getItem("melties_lang") || "en";
 
 // characters that have a 3D model in models/<key>.glb (others fall back to the PNG)
-const GLB_CHARS = new Set(["melty"]);
+const GLB_CHARS = new Set(["melty", "game", "book", "screen", "popcorn", "icecream", "sleep"]);
+// per-character model filename override (default: <key>.glb)
+const MODEL3D = { melty: "melty_hy3d.glb" };
+const glbFile = (k) => MODEL3D[k] || `${k}.glb`;
+// TripoSR-pipeline GLBs are exported lying on their back; melty (Hunyuan3D) is already upright
+const ORIENT3D = { melty: "0deg 0deg 0deg" };
+const glbOrient = (k) => ORIENT3D[k] || "0deg -90deg 270deg";
+// modal view: show 2D art first; the heavy GLB loads only when the "Touch in 3D" button is tapped
 const charView = (c) => GLB_CHARS.has(c.key)
-  ? `<model-viewer class="ch-3d" src="models/${c.key}.glb" alt="${c.en} 3D figure" camera-controls auto-rotate
-       touch-action="pan-y" disable-zoom shadow-intensity="1.1" exposure="1.15"
-       camera-orbit="0deg 78deg 3.4m" min-camera-orbit="auto 60deg auto" max-camera-orbit="auto 95deg auto"></model-viewer>`
+  ? `<div class="ch-stage" data-glb="${glbFile(c.key)}" data-orient="${glbOrient(c.key)}" data-alt="${c.en}">
+       ${charImg(c.key, c.en)}
+       <button class="view3d-btn" type="button" data-track="view3d-${c.key}">
+         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2 2 7v10l10 5 10-5V7L12 2zm0 2.3 6.5 3.25L12 10.8 5.5 7.55 12 4.3zM4 9.2l7 3.5v6.6l-7-3.5V9.2zm9 10.1v-6.6l7-3.5v6.6l-7 3.5z"/></svg>
+         <span>${I18N[LANG].view3d}</span>
+       </button>
+     </div>`
   : charImg(c.key, c.en);
 
 const charImg = (k, en) =>
-  `<div class="ch-art ph"><img src="images/characters/${k}.png" alt="${en}, a Melties character"
+  `<div class="ch-art ph"><img src="images/characters/${k}.webp" alt="${en}, a Melties character"
      onerror="this.closest('.ch-art').classList.add('ph')" onload="this.closest('.ch-art').classList.remove('ph')">
    <span class="ph-label">${en}</span></div>`;
 
 function ttCards(){
   if(VIDEOS.length){
     return VIDEOS.map((v,i)=>`
-      <a class="tt-card reveal" style="--d:${i*60}ms" href="${v.url}" target="_blank" rel="noopener" data-track="latest-video">
+      <a class="tt-card reveal" style="--d:${i*60}ms" href="${v.url}" target="_blank" rel="noopener" data-track="latest-video" aria-label="Watch a Melties video on TikTok">
         ${v.thumb?`<img class="tt-thumb" src="${v.thumb}" alt="Latest Melties video" loading="lazy">`:""}
-        <span class="tt-play">▶</span></a>`).join("");
+        <span class="tt-play" aria-hidden="true">▶</span></a>`).join("");
   }
   return Array.from({length:4},(_,i)=>
-    `<a class="tt-card reveal" style="--d:${i*60}ms" href="${TIKTOK_PROFILE}" target="_blank" rel="noopener" data-track="latest-teaser"><span class="tt-play">▶</span></a>`).join("");
+    `<a class="tt-card reveal" style="--d:${i*60}ms" href="${TIKTOK_PROFILE}" target="_blank" rel="noopener" data-track="latest-teaser" aria-label="Watch Melties on TikTok"><span class="tt-play" aria-hidden="true">▶</span></a>`).join("");
 }
 
 function render() {
@@ -73,7 +84,7 @@ function render() {
       ${charImg(c.key,c.en)}<span class="ch-name">${c.en}</span></button>`).join("");
   document.getElementById("story").innerHTML = STORY[LANG].map(s=>`<p class="reveal">${s}</p>`).join("");
   document.getElementById("tiktokRail").innerHTML = ttCards();
-  document.getElementById("world").innerHTML = WORLD.map((w,i)=>`<button class="tile reveal" style="--d:${i*50}ms" data-w="${i}"><div class="tile-img"><img src="images/world/${w.img}.jpg" alt="${w.en} — a Melties world" loading="lazy"></div><span>${w[LANG]}</span></button>`).join("");
+  document.getElementById("world").innerHTML = WORLD.map((w,i)=>`<button class="tile reveal" style="--d:${i*50}ms" data-w="${i}"><div class="tile-img"><img src="images/world/${w.img}.webp" alt="${w.en} — a Melties world" loading="lazy"></div><span>${w[LANG]}</span></button>`).join("");
   document.getElementById("goods").innerHTML = GOODS.map((g,i)=>`<div class="tile reveal" style="--d:${i*50}ms"><div class="tile-ph"></div><span>${g[LANG]}</span></div>`).join("");
 
   setupReveal();
@@ -97,13 +108,47 @@ function openChar(i){
 }
 document.getElementById("rail").addEventListener("click", e=>{ const b=e.target.closest(".ch"); if(b) openChar(+b.dataset.i); });
 
+// ===== on-demand 3D: load model-viewer + the heavy GLB only when "Touch in 3D" is tapped =====
+let mvLib = null; // memoized dynamic import of the model-viewer library (~300KB, skipped for non-3D visitors)
+const loadModelViewer = () => (mvLib ||= import("https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js")
+  .catch(err => { mvLib = null; throw err; }));
+modalCard.addEventListener("click", async e=>{
+  const btn = e.target.closest(".view3d-btn");
+  if(!btn) return;
+  const stage = btn.closest(".ch-stage");
+  if(!stage) return;
+  const src = stage.dataset.glb, alt = stage.dataset.alt || "";
+  const fallback = stage.innerHTML; // restore the 2D art if the library or GLB fails to load
+  const fail = ()=>{ stage.innerHTML = fallback; stage.classList.remove("loading"); };
+  stage.classList.add("loading");
+  btn.querySelector("span").textContent = I18N[LANG].view3dload;
+  try { await loadModelViewer(); } catch { fail(); return; }
+  const mv = document.createElement("model-viewer");
+  mv.className = "ch-3d";
+  mv.setAttribute("src", `models/${src}`);
+  mv.setAttribute("orientation", stage.dataset.orient || "0deg 0deg 0deg");
+  mv.setAttribute("alt", `${alt} 3D figure`);
+  mv.setAttribute("camera-controls", "");
+  mv.setAttribute("auto-rotate", "");
+  mv.setAttribute("touch-action", "pan-y");
+  mv.setAttribute("interaction-prompt", "auto");
+  mv.setAttribute("shadow-intensity", "1.1");
+  mv.setAttribute("exposure", "1.15");
+  mv.setAttribute("camera-orbit", "0deg 78deg 105%");
+  mv.setAttribute("min-camera-orbit", "auto 40deg auto");
+  mv.setAttribute("max-camera-orbit", "auto 120deg auto");
+  mv.addEventListener("load", ()=> stage.classList.remove("loading"));
+  mv.addEventListener("error", fail);
+  stage.replaceChildren(mv);
+});
+
 // ===== world lightbox (tap a world → enlarge) =====
 const wModal = document.getElementById("worldModal"), wImg = document.getElementById("worldImg"), wCap = document.getElementById("worldCap");
 let wLastFocus = null;
 function openWorld(i){
   const w = WORLD[i];
   wLastFocus = document.activeElement;
-  wImg.src = `images/world/${w.img}_full.jpg`;
+  wImg.src = `images/world/${w.img}_full.webp`;
   wImg.alt = `${w.en} — a Melties world`;
   wCap.textContent = w[LANG];
   wModal.hidden = false;
@@ -148,7 +193,7 @@ function injectLD(){
       {"@type":"WebSite","@id":"https://melties.world/#site","url":"https://melties.world/","name":"Melties",
        "inLanguage":LANG==="en"?"en":"ja","publisher":{"@id":"https://melties.world/#org"}},
       {"@type":"ItemList","name":"Melties characters","itemListElement":
-        CHARS.map((c,i)=>({"@type":"ListItem","position":i+1,"item":{"@type":"Character","name":c.en,
+        CHARS.map((c,i)=>({"@type":"ListItem","position":i+1,"item":{"@type":"Person","name":c.en,
           "description":c.p["en"],"image":`https://melties.world/images/characters/${c.key}.png`}}))}
     ]};
   document.getElementById("ldjson").textContent = JSON.stringify(data);

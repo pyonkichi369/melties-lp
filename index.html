@@ -26,19 +26,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<script type="module" src="https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 <script type="application/ld+json" id="ldjson">
 {"@context":"https://schema.org","@graph":[
 {"@type":"Organization","@id":"https://melties.world/#org","name":"Melties","url":"https://melties.world/","logo":"https://melties.world/images/logo.png","description":"Melties are the world's cutest melting friends — a short-form character world posted daily on TikTok.","sameAs":["https://www.tiktok.com/@melties.world","https://www.instagram.com/melties.world"]},
 {"@type":"WebSite","@id":"https://melties.world/#site","url":"https://melties.world/","name":"Melties","inLanguage":"en","publisher":{"@id":"https://melties.world/#org"}},
 {"@type":"ItemList","name":"Melties characters","itemListElement":[
-{"@type":"ListItem","position":1,"item":{"@type":"Character","name":"Melty","description":"A curious leader who brings everyone together.","image":"https://melties.world/images/characters/melty.png"}},
-{"@type":"ListItem","position":2,"item":{"@type":"Character","name":"Game","description":"Zones out completely when focused.","image":"https://melties.world/images/characters/game.png"}},
-{"@type":"ListItem","position":3,"item":{"@type":"Character","name":"Book","description":"Calm and endlessly curious.","image":"https://melties.world/images/characters/book.png"}},
-{"@type":"ListItem","position":4,"item":{"@type":"Character","name":"Screen","description":"Bright — soaks up way too much info.","image":"https://melties.world/images/characters/screen.png"}},
-{"@type":"ListItem","position":5,"item":{"@type":"Character","name":"Popcorn","description":"Cheerful and always excited.","image":"https://melties.world/images/characters/popcorn.png"}},
-{"@type":"ListItem","position":6,"item":{"@type":"Character","name":"Ice Cream","description":"Sweet — makes everyone smile.","image":"https://melties.world/images/characters/icecream.png"}},
-{"@type":"ListItem","position":7,"item":{"@type":"Character","name":"Sleep","description":"Mellow and sleepy.","image":"https://melties.world/images/characters/sleep.png"}}
+{"@type":"ListItem","position":1,"item":{"@type":"Person","name":"Melty","description":"A curious leader who brings everyone together.","image":"https://melties.world/images/characters/melty.png"}},
+{"@type":"ListItem","position":2,"item":{"@type":"Person","name":"Game","description":"Zones out completely when focused.","image":"https://melties.world/images/characters/game.png"}},
+{"@type":"ListItem","position":3,"item":{"@type":"Person","name":"Book","description":"Calm and endlessly curious.","image":"https://melties.world/images/characters/book.png"}},
+{"@type":"ListItem","position":4,"item":{"@type":"Person","name":"Screen","description":"Bright — soaks up way too much info.","image":"https://melties.world/images/characters/screen.png"}},
+{"@type":"ListItem","position":5,"item":{"@type":"Person","name":"Popcorn","description":"Cheerful and always excited.","image":"https://melties.world/images/characters/popcorn.png"}},
+{"@type":"ListItem","position":6,"item":{"@type":"Person","name":"Ice Cream","description":"Sweet — makes everyone smile.","image":"https://melties.world/images/characters/icecream.png"}},
+{"@type":"ListItem","position":7,"item":{"@type":"Person","name":"Sleep","description":"Mellow and sleepy.","image":"https://melties.world/images/characters/sleep.png"}}
 ]}]}
 </script>
 <!-- Privacy-friendly analytics: uncomment + add your token to enable Cloudflare Web Analytics (cookieless, free).
@@ -52,7 +51,7 @@
 <!-- HERO -->
 <header class="hero">
   <div class="hero-art">
-    <img src="images/group.png" alt="The seven Melties characters around the Melties logo" onerror="this.closest('.hero-art').classList.add('ph')">
+    <img src="images/group.webp" width="960" height="960" fetchpriority="high" alt="The seven Melties characters around the Melties logo" onerror="this.closest('.hero-art').classList.add('ph')">
     <span class="ph-label">Melties</span>
   </div>
   <h1 class="tagline">Every Day Melts Better.</h1>
@@ -64,13 +63,13 @@
 <section class="sec">
   <h2 data-i18n="friends">Meet the Melties</h2>
   <div class="rail" id="rail">
-    <button class="ch c-pink" data-i="0"><div class="ch-art ph"><img src="images/characters/melty.png" alt="Melty, a Melties character"><span class="ph-label">Melty</span></div><span class="ch-name">Melty</span></button>
-    <button class="ch c-lav" data-i="1"><div class="ch-art ph"><img src="images/characters/game.png" alt="Game, a Melties character"><span class="ph-label">Game</span></div><span class="ch-name">Game</span></button>
-    <button class="ch c-lav" data-i="2"><div class="ch-art ph"><img src="images/characters/book.png" alt="Book, a Melties character"><span class="ph-label">Book</span></div><span class="ch-name">Book</span></button>
-    <button class="ch c-mint" data-i="3"><div class="ch-art ph"><img src="images/characters/screen.png" alt="Screen, a Melties character"><span class="ph-label">Screen</span></div><span class="ch-name">Screen</span></button>
-    <button class="ch c-pop" data-i="4"><div class="ch-art ph"><img src="images/characters/popcorn.png" alt="Popcorn, a Melties character"><span class="ph-label">Popcorn</span></div><span class="ch-name">Popcorn</span></button>
-    <button class="ch c-pink" data-i="5"><div class="ch-art ph"><img src="images/characters/icecream.png" alt="Ice Cream, a Melties character"><span class="ph-label">Ice Cream</span></div><span class="ch-name">Ice Cream</span></button>
-    <button class="ch c-lav" data-i="6"><div class="ch-art ph"><img src="images/characters/sleep.png" alt="Sleep, a Melties character"><span class="ph-label">Sleep</span></div><span class="ch-name">Sleep</span></button>
+    <button class="ch c-pink" data-i="0"><div class="ch-art ph"><img src="images/characters/melty.webp" alt="Melty, a Melties character"><span class="ph-label">Melty</span></div><span class="ch-name">Melty</span></button>
+    <button class="ch c-lav" data-i="1"><div class="ch-art ph"><img src="images/characters/game.webp" alt="Game, a Melties character"><span class="ph-label">Game</span></div><span class="ch-name">Game</span></button>
+    <button class="ch c-lav" data-i="2"><div class="ch-art ph"><img src="images/characters/book.webp" alt="Book, a Melties character"><span class="ph-label">Book</span></div><span class="ch-name">Book</span></button>
+    <button class="ch c-mint" data-i="3"><div class="ch-art ph"><img src="images/characters/screen.webp" alt="Screen, a Melties character"><span class="ph-label">Screen</span></div><span class="ch-name">Screen</span></button>
+    <button class="ch c-pop" data-i="4"><div class="ch-art ph"><img src="images/characters/popcorn.webp" alt="Popcorn, a Melties character"><span class="ph-label">Popcorn</span></div><span class="ch-name">Popcorn</span></button>
+    <button class="ch c-pink" data-i="5"><div class="ch-art ph"><img src="images/characters/icecream.webp" alt="Ice Cream, a Melties character"><span class="ph-label">Ice Cream</span></div><span class="ch-name">Ice Cream</span></button>
+    <button class="ch c-lav" data-i="6"><div class="ch-art ph"><img src="images/characters/sleep.webp" alt="Sleep, a Melties character"><span class="ph-label">Sleep</span></div><span class="ch-name">Sleep</span></button>
   </div>
   <p class="hint" data-i18n="swipe">Swipe → tap a Meltie</p>
 </section>
@@ -96,12 +95,12 @@
 <section class="sec world">
   <h2 data-i18n="world">World</h2>
   <div class="grid" id="world">
-    <div class="tile"><div class="tile-img"><img src="images/world/meltworld.jpg" alt="Meltie World — a Melties world" loading="lazy"></div><span>Meltie World</span></div>
-    <div class="tile"><div class="tile-img"><img src="images/world/candy.jpg" alt="Candy Land — a Melties world" loading="lazy"></div><span>Candy Land</span></div>
-    <div class="tile"><div class="tile-img"><img src="images/world/cinema.jpg" alt="Cinema — a Melties world" loading="lazy"></div><span>Cinema</span></div>
-    <div class="tile"><div class="tile-img"><img src="images/world/arcade.jpg" alt="Arcade — a Melties world" loading="lazy"></div><span>Arcade</span></div>
-    <div class="tile"><div class="tile-img"><img src="images/world/library.jpg" alt="Library — a Melties world" loading="lazy"></div><span>Library</span></div>
-    <div class="tile"><div class="tile-img"><img src="images/world/dreamland.jpg" alt="Dreamland — a Melties world" loading="lazy"></div><span>Dreamland</span></div>
+    <div class="tile"><div class="tile-img"><img src="images/world/meltworld.webp" alt="Meltie World — a Melties world" loading="lazy"></div><span>Meltie World</span></div>
+    <div class="tile"><div class="tile-img"><img src="images/world/candy.webp" alt="Candy Land — a Melties world" loading="lazy"></div><span>Candy Land</span></div>
+    <div class="tile"><div class="tile-img"><img src="images/world/cinema.webp" alt="Cinema — a Melties world" loading="lazy"></div><span>Cinema</span></div>
+    <div class="tile"><div class="tile-img"><img src="images/world/arcade.webp" alt="Arcade — a Melties world" loading="lazy"></div><span>Arcade</span></div>
+    <div class="tile"><div class="tile-img"><img src="images/world/library.webp" alt="Library — a Melties world" loading="lazy"></div><span>Library</span></div>
+    <div class="tile"><div class="tile-img"><img src="images/world/dreamland.webp" alt="Dreamland — a Melties world" loading="lazy"></div><span>Dreamland</span></div>
   </div>
   <p class="hint" data-i18n="more">…and more, coming soon.</p>
 </section>
@@ -122,7 +121,7 @@
 <section class="sec arcade-entry">
   <h2 data-i18n="game">Game Center</h2>
   <a class="arcade-entry-card" href="play.html" data-track="arcade-entry">
-    <img src="images/world/arcade.jpg" alt="Melties Game Center — play mini-games" loading="lazy">
+    <img src="images/world/arcade.webp" alt="Melties Game Center — play mini-games" loading="lazy">
     <span class="arcade-entry-badge"><span data-i18n="playgames">Play games</span> ▶</span>
   </a>
   <p class="hint" data-i18n="gameentry">3 free Meltie mini-games — Puyo, Tsum & Catch!</p>
